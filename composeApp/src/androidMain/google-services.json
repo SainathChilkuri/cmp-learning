@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "533057273649",
+    "project_id": "cmp-learnings",
+    "storage_bucket": "cmp-learnings.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533057273649:android:0e9cbb29a8acb75855ba10",
+        "android_client_info": {
+          "package_name": "org.demo.cmp.project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDClgk7yZmBMsSYko1sXSpam7hmvoj2NeA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

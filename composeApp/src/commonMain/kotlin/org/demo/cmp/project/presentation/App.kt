@@ -5,12 +5,14 @@ import androidx.compose.runtime.*
 import androidx.navigation.compose.rememberNavController
 import org.demo.cmp.project.presentation.navigations.CustomNavGraph
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.mp.KoinPlatform.getKoin
 
 @Composable
 @Preview
 fun App() {
     MaterialTheme {
+        val koin = getKoin()
         val navController = rememberNavController();
-        CustomNavGraph(navController)
+        CustomNavGraph(navController,koin)
     }
 }

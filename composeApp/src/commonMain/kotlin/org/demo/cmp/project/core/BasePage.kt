@@ -11,12 +11,12 @@ abstract class BasePage<V : BaseViewModel>(val viewModel: V ) {
          Scaffold (
             topBar = { TopAppBarUnit() }
         ) { innerPadding ->
-            Content(paddingValues = innerPadding)
+            Content(paddingValues = innerPadding, viewModel)
         }
     }
 
     @Composable
-    abstract fun Content(paddingValues: PaddingValues);
+    abstract fun Content(paddingValues: PaddingValues, viewModel: V);
 
     @Composable
     open fun TopAppBarUnit() {
