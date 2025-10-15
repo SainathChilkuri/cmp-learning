@@ -14,6 +14,8 @@ junit = "4.13.2"
 kotlin = "2.2.20"
 navVersion = "2.9.0"
 koin = "4.1.1"
+firebase-bom-version = "32.4.1"
+gms-service = "4.4.4"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -28,6 +30,9 @@ androidx-lifecycle-viewmodelCompose = { module = "org.jetbrains.androidx.lifecyc
 androidx-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 androidx-navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navVersion" }
 insert-koin = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+firebase-bom = {module ="com.google.firebase:firebase-bom", version.ref = 'firebase-bom-version'}
+firebase-analytics = {module ="com.google.firebase:firebase-analytics"}
+
 
 
 [plugins]
@@ -36,3 +41,4 @@ androidLibrary = { id = "com.android.library", version.ref = "agp" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+gms-google-service = { id = "com.google.gms.google-services", version.ref = "gms-service" }

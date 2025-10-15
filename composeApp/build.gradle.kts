@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    id("com.google.gms.google-services") version "4.3.8" apply false
+    id("com.google.gms.google-services") version "4.4.4" apply true
 }
 
 kotlin {
@@ -30,9 +30,10 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-            implementation(project.dependencies.platform("com.google.firebase:firebase-bom:34.4.0"))
-            implementation("com.google.firebase:firebase-analytics")
 
+            ///firebase dependencies
+            implementation(project.dependencies.platform(libs.firebase.bom))
+            implementation(libs.firebase.analytics)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -43,7 +44,11 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+
+            ///nav deps
             implementation(libs.androidx.navigation.compose)
+
+            ///for DI
             implementation(libs.insert.koin)
         }
         commonTest.dependencies {
