@@ -1,34 +1,39 @@
 package org.demo.cmp.project.presentation.screens.splash
 
+import AppColors
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewModelScope
 import demo_cmp_project.composeapp.generated.resources.Res
-import demo_cmp_project.composeapp.generated.resources.cmp_learnings
-import demo_cmp_project.composeapp.generated.resources.welcome_to
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import demo_cmp_project.composeapp.generated.resources.amico
+import demo_cmp_project.composeapp.generated.resources.confused_about_managing_time
+import demo_cmp_project.composeapp.generated.resources.enjoy_your_time
+import org.demo.cmp.project.core.AppLogs
 import org.demo.cmp.project.core.BasePage
+import org.demo.cmp.project.design_system.AppText
+import org.demo.cmp.project.design_system.GoogleSignIn
+import org.demo.cmp.project.design_system.VerticalSpacer
 import org.demo.cmp.project.presentation.navigations.NavigatorUtil
 import org.demo.cmp.project.presentation.navigations.Screens
+import org.demo.cmp.project.utils.SafeArea
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 class SplashScreen(splashViewModel: SplashViewModel) : BasePage<SplashViewModel>(viewModel = splashViewModel) {
@@ -39,15 +44,21 @@ class SplashScreen(splashViewModel: SplashViewModel) : BasePage<SplashViewModel>
         if (stateValue) {
             NavigatorUtil.PushNamedAndRemoveUntil(Screens.Login, Screens.Splash)
         }
-        Box(
-            modifier = Modifier.fillMaxSize().background(color = Color(0xFFB3E5FC)),
-            contentAlignment = Alignment.Center
-        ) {
-            Column (
-                horizontalAlignment = Alignment.CenterHorizontally
-            ){
-                Text(stringResource(Res.string.welcome_to), fontSize = 20.sp, fontWeight = FontWeight.W800)
-                Text(stringResource(Res.string.cmp_learnings), fontSize = 20.sp, fontWeight = FontWeight.W800)
+        SafeArea { modifier ->
+            Box(
+                modifier = modifier.fillMaxSize().background(color = AppColors.white),
+                contentAlignment = Alignment.Center
+            ) {
+                Column (
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxSize()
+                ){
+                    Image(
+                        painter = painterResource(Res.drawable.amico),
+                        contentDescription = "Splash Image",
+                        modifier = Modifier.height(300.dp).fillMaxWidth()
+                    )
+                }
             }
         }
     }

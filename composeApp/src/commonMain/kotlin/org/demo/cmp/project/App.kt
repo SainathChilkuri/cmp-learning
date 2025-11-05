@@ -1,4 +1,4 @@
-package org.demo.cmp.project.presentation
+package org.demo.cmp.project
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
@@ -11,7 +11,7 @@ import org.koin.mp.KoinPlatform.getKoin
 @Composable
 @Preview
 fun App() {
-    AppLogs.info("Starting the app");
+    AppLogs.info("Starting the app", tag = "APP");
     MaterialTheme {
         val koin = getKoin()
         val navController = rememberNavController();

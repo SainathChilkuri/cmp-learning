@@ -3,15 +3,15 @@ package org.demo.cmp.project.core
 import platform.Foundation.NSLog
 
 actual object AppLogs {
-    actual fun info(message: String) {
-        NSLog("IOS [INFO]: $message")
+    actual fun info(message: String,tag: String) {
+        NSLog("INFO [${tag}]: $message")
     }
 
-    actual fun warn(message: String) {
-        NSLog("IOS [WARN]: $message")
+    actual fun warn(message: String,tag: String) {
+        NSLog("WARN [${tag}]: $message")
     }
 
-    actual fun error(message: String) {
-        NSLog("IOS [ERROR]: $message")
+    actual fun error(message: String,tag: String) {
+        NSLog("ERROR [${tag}]: $message")
     }
 }

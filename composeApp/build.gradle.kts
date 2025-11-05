@@ -1,13 +1,25 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
+import java.io.FileInputStream
+
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    id("com.google.gms.google-services") version "4.4.4" apply true
+    alias(libs.plugins.gms.google.service)
 }
+
+// Create a variable called keystorePropertiesFile, and initialize it to your
+// keystore.properties file, in the rootProject folder.
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+
+// Initialize a new Properties() object called keystoreProperties.
+val keystoreProperties = Properties()
+
+// Load your keystore.properties file into the keystoreProperties object.
+keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 
 kotlin {
     androidTarget {
@@ -34,6 +46,14 @@ kotlin {
             ///firebase dependencies
             implementation(project.dependencies.platform(libs.firebase.bom))
             implementation(libs.firebase.analytics)
+            // Add the dependency for the Firebase Authentication library
+            // When using the BoM, you don't specify versions in Firebase library dependencies
+            implementation("com.google.firebase:firebase-auth")
+
+            // Also add the dependencies for the Credential Manager libraries and specify their versions
+            implementation("androidx.credentials:credentials:1.3.0")
+            implementation("androidx.credentials:credentials-play-services-auth:1.3.0")
+            implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -77,6 +97,15 @@ android {
         versionCode = 1
         versionName = "1.0"
     }
+
+    signingConfigs {
+        create("release") {
+            keyAlias = keystoreProperties["keyAlias"] as String
+            keyPassword = keystoreProperties["keyPassword"] as String
+            storeFile = file(keystoreProperties["storeFile"] as String)
+            storePassword = keystoreProperties["storePassword"] as String
+        }
+    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -84,6 +113,10 @@ android {
     }
     buildTypes {
         getByName("release") {
+            isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
+        }
+        getByName("debug") {
             isMinifyEnabled = false
         }
     }
