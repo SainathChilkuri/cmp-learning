@@ -1,6 +1,5 @@
-package org.demo.cmp.project.data
+package org.demo.cmp.project.core
 
-import androidx.compose.runtime.Composable
 import org.demo.cmp.project.domain.models.GoogleAccountData
 
 actual object GoogleSignInUtil {

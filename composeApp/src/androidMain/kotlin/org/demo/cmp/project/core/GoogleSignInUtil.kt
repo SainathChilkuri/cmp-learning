@@ -1,4 +1,4 @@
-package org.demo.cmp.project.data
+package org.demo.cmp.project.core
 
 import androidx.credentials.CredentialManager
 import androidx.credentials.GetCredentialRequest
@@ -11,16 +11,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
-import org.demo.cmp.project.MainActivity.Companion.appContext
-import org.demo.cmp.project.core.AppLogs
+import org.demo.cmp.project.MainActivity
 import org.demo.cmp.project.domain.models.GoogleAccountData
 
 actual object GoogleSignInUtil {
     actual suspend fun signIn(): GoogleAccountData? {
-        return  withContext(Dispatchers.IO){
-            try{
+        return withContext(Dispatchers.IO) {
+            try {
                 // Instantiate a Google sign-in request
-                val googleIdOption : GetGoogleIdOption = GetGoogleIdOption.Builder()
+                val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
                     .setFilterByAuthorizedAccounts(false)
                     .setAutoSelectEnabled(true)
                     .setServerClientId("533057273649-k96qtl36v4ktrgnf259f6ni7iogqtsh0.apps.googleusercontent.com")
@@ -29,15 +28,20 @@ actual object GoogleSignInUtil {
                 AppLogs.info(googleIdOption.serverClientId, tag = "Google Sign In")
 
                 // Create the Credential Manager request
-                val request = GetCredentialRequest.Builder().addCredentialOption(googleIdOption).build()
-                val credentialManager = CredentialManager.create(context = appContext)
-                val credentialResponse = credentialManager.getCredential(appContext,request).credential
-                val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credentialResponse.data)
+                val request =
+                    GetCredentialRequest.Builder().addCredentialOption(googleIdOption).build()
+                val credentialManager = CredentialManager.create(context = MainActivity.appContext)
+                val credentialResponse =
+                    credentialManager.getCredential(MainActivity.appContext, request).credential
+                val googleIdTokenCredential =
+                    GoogleIdTokenCredential.createFrom(credentialResponse.data)
                 AppLogs.info("$${credentialResponse.data}", tag = "Google Sign In")
 
-                val firebaseCredential = GoogleAuthProvider.getCredential(googleIdTokenCredential.idToken, null)
-                val authResult = FirebaseAuth.getInstance().signInWithCredential(firebaseCredential).await()
-                AppLogs.info("${authResult.user?.email}",tag = "Google Sign In")
+                val firebaseCredential =
+                    GoogleAuthProvider.getCredential(googleIdTokenCredential.idToken, null)
+                val authResult =
+                    FirebaseAuth.getInstance().signInWithCredential(firebaseCredential).await()
+                AppLogs.info("${authResult.user?.email}", tag = "Google Sign In")
                 return@withContext GoogleAccountData(
                     email = authResult.user?.email,
                     displayName = authResult.user?.displayName,
@@ -45,7 +49,7 @@ actual object GoogleSignInUtil {
                 );
 
             } catch (e: Exception) {
-                AppLogs.error("${e.message}",tag = "Google Sign In")
+                AppLogs.error("${e.message}", tag = "Google Sign In")
                 return@withContext null;
             }
         }

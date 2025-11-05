@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -27,10 +29,13 @@ import demo_cmp_project.composeapp.generated.resources.enjoy_your_time
 import kotlinx.coroutines.launch
 import org.demo.cmp.project.core.AppLogs
 import org.demo.cmp.project.core.BasePage
-import org.demo.cmp.project.data.GoogleSignInUtil
+import org.demo.cmp.project.core.DataState
+import org.demo.cmp.project.core.GoogleSignInUtil
 import org.demo.cmp.project.design_system.AppText
 import org.demo.cmp.project.design_system.GoogleSignIn
 import org.demo.cmp.project.design_system.VerticalSpacer
+import org.demo.cmp.project.presentation.navigations.NavigatorUtil
+import org.demo.cmp.project.presentation.navigations.Screens
 import org.demo.cmp.project.utils.SafeArea
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -41,6 +46,11 @@ class LoginScreen (private val loginViewModel: LoginViewModel ): BasePage<LoginV
     override fun Content(paddingValues: PaddingValues, viewModel: LoginViewModel) {
         val email = remember { mutableStateOf("") }
         val password = remember { mutableStateOf("") }
+        val loginScreenState = viewModel.loginScreenStateValue.collectAsState();
+
+        if(loginScreenState.value.dataState == DataState.SUCCESS) {
+                NavigatorUtil.PushNamedAndRemoveUntil(Screens.Dashboard, Screens.Login)
+        }
         SafeArea { modifier ->
             Box(
                 modifier = modifier.fillMaxSize().background(color = AppColors.white),
@@ -66,14 +76,15 @@ class LoginScreen (private val loginViewModel: LoginViewModel ): BasePage<LoginV
                         AppText(stringResource(Res.string.confused_about_managing_time), size = 14, fontWeight = FontWeight.W400,color = AppColors.grey, textAlign = TextAlign.Center)
                     }
                     Spacer(modifier = Modifier.weight(1f)) // Pushes the button to the bottom
-                    GoogleSignIn(onClick = {
-                        AppLogs.info("Google Sign In Initiated", tag = "Google Sign In")
-                        viewModel.viewModelScope.launch {
-                            val accountData = GoogleSignInUtil.signIn()
-                            AppLogs.info(accountData?.email ?: "Empty" ,"GoogleAccountData")
-                            AppLogs.info(accountData?.displayName ?: "Empty" ,"GoogleAccountData")
+                    when(loginScreenState.value.dataState) {
+                        DataState.LOADING -> {
+                            CircularProgressIndicator()
                         }
+                        else -> GoogleSignIn(onClick = {
+                        AppLogs.info("Google Sign In Initiated", tag = "Google Sign In")
+                        viewModel.signInWithGoogle();
                     })
+                    }
                     VerticalSpacer(40)
                 }
             }

@@ -27,6 +27,7 @@ import demo_cmp_project.composeapp.generated.resources.confused_about_managing_t
 import demo_cmp_project.composeapp.generated.resources.enjoy_your_time
 import org.demo.cmp.project.core.AppLogs
 import org.demo.cmp.project.core.BasePage
+import org.demo.cmp.project.core.DataState
 import org.demo.cmp.project.design_system.AppText
 import org.demo.cmp.project.design_system.GoogleSignIn
 import org.demo.cmp.project.design_system.VerticalSpacer
@@ -40,10 +41,13 @@ class SplashScreen(splashViewModel: SplashViewModel) : BasePage<SplashViewModel>
 
     @Composable
     override fun Content(paddingValues: PaddingValues, viewModel: SplashViewModel) {
-        val stateValue by viewModel.navigateToLogin.collectAsState()
-        if (stateValue) {
-            NavigatorUtil.PushNamedAndRemoveUntil(Screens.Login, Screens.Splash)
-        }
+        val stateValue = viewModel.navigateToLogin.collectAsState()
+            if(stateValue.value.dataState == DataState.SUCCESS) {
+                NavigatorUtil.PushNamedAndRemoveUntil(Screens.Dashboard, Screens.Splash)
+            }
+            if(stateValue.value.dataState == DataState.FAILED) {
+                NavigatorUtil.PushNamedAndRemoveUntil(Screens.Login, Screens.Splash)
+            }
         SafeArea { modifier ->
             Box(
                 modifier = modifier.fillMaxSize().background(color = AppColors.white),

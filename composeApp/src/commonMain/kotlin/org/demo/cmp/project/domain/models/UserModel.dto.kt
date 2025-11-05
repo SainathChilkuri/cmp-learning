@@ -1,5 +1,5 @@
 package org.demo.cmp.project.domain.models
 
 
-class UserModel {
+data class UserModel(val email: String, val username: String, val displayName: String){
 }
