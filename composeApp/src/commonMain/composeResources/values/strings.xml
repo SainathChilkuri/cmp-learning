@@ -1,6 +1,8 @@
 <resources>
     <string name = "welcome_to">Welcome to</string>
     <string name = "cmp_learnings">CMP Learnings</string>
+    <string name = "enjoy_your_time">Enjoy Your Time</string>
+    <string name = "confused_about_managing_time">when you are confused about managing your task come to us</string>
     <string name = "login">Login</string>
     <string name = "email">Email</string>
     <string name = "password">Password</string>
