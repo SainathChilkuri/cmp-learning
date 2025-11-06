@@ -1,12 +1,13 @@
 package org.demo.cmp.project.di
 
 import androidx.room.RoomDatabase
-import org.demo.cmp.project.core.AppDatabase
+import com.get.set.database.core.AppDatabase
+import com.get.set.database.data.datasource.local_datasource.LocalDataSource
+import com.get.set.database.data.datasource.local_datasource.LocalDataSourceImpl
 import org.demo.cmp.project.core.AppDatabaseBuilder
-import org.demo.cmp.project.data.datasource.local_datasource.LocalDataSource
-import org.demo.cmp.project.data.datasource.local_datasource.LocalDataSourceImpl
-import org.demo.cmp.project.data.datasource.remote_datasource.auth.AuthDataSource
-import org.demo.cmp.project.data.datasource.remote_datasource.auth.AuthDatasourceImpl
+import com.get.set.auth.data.datasource.remote_datasource.auth.AuthDataSource
+import com.get.set.auth.data.datasource.remote_datasource.auth.AuthDatasourceImpl
+import org.demo.cmp.project.core.GoogleSignInUtil
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
@@ -23,4 +24,8 @@ val datasources = module {
     single<AuthDataSource> {
         AuthDatasourceImpl()
     } bind AuthDataSource::class
+
+    single {
+        GoogleSignInUtil()
+    }
 }

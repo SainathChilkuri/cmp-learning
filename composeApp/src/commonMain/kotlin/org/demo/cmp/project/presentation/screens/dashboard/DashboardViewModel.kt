@@ -1,6 +1,6 @@
 package org.demo.cmp.project.presentation.screens.dashboard
 
-import org.demo.cmp.project.core.BaseViewModel
+import com.get.set.coremodule.BaseViewModel
 
 class DashboardViewModel: BaseViewModel() {
 }

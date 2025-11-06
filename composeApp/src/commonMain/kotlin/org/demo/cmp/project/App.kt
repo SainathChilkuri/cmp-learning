@@ -3,7 +3,7 @@ package org.demo.cmp.project
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.navigation.compose.rememberNavController
-import org.demo.cmp.project.core.AppLogs
+import com.get.set.coremodule.AppLogs
 import org.demo.cmp.project.presentation.navigations.CustomNavGraph
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.mp.KoinPlatform.getKoin

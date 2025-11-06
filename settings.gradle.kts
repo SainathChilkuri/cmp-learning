@@ -29,3 +29,8 @@ dependencyResolutionManagement {
 }
 
 include(":composeApp")
+include(":localDatabase")
+include(":coreModule")
+include(":auth")
+include(":designSystem")
+include(":firebaseDatasource")

@@ -9,7 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import org.demo.cmp.project.core.BasePage
+import com.get.set.coremodule.BasePage
 import org.demo.cmp.project.utils.SafeArea
 
 class DashboardScreen(private val dashboardViewModel: DashboardViewModel): BasePage<DashboardViewModel>(viewModel = dashboardViewModel) {
@@ -26,7 +26,6 @@ class DashboardScreen(private val dashboardViewModel: DashboardViewModel): BaseP
                    horizontalAlignment = Alignment.CenterHorizontally
                ) {
                    Text("Dashboard")
-
                }
            }
 

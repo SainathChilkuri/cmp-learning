@@ -5,11 +5,11 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.get.set.coremodule.navigations.Navigator
+import com.get.set.coremodule.navigations.Screens
 import org.demo.cmp.project.presentation.screens.dashboard.DashboardScreen
 import org.demo.cmp.project.presentation.screens.login.LoginScreen
-import org.demo.cmp.project.presentation.screens.login.LoginViewModel
 import org.demo.cmp.project.presentation.screens.splash.SplashScreen
-import org.demo.cmp.project.presentation.screens.splash.SplashViewModel
 import org.koin.core.Koin
 
 @Composable
