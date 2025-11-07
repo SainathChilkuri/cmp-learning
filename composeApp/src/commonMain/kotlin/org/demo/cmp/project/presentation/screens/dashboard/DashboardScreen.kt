@@ -9,10 +9,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.get.set.coremodels.models.UserDataModel
 import com.get.set.coremodule.BasePage
 import com.get.set.designsystem.util.SafeArea
 
-class DashboardScreen(private val dashboardViewModel: DashboardViewModel): BasePage<DashboardViewModel>(viewModel = dashboardViewModel) {
+class DashboardScreen(private val dashboardViewModel: DashboardViewModel, private val userDataModel: UserDataModel): BasePage<DashboardViewModel>(viewModel = dashboardViewModel) {
 
     @Composable
     override fun Content(paddingValues: PaddingValues, viewModel: DashboardViewModel) {
@@ -25,7 +26,7 @@ class DashboardScreen(private val dashboardViewModel: DashboardViewModel): BaseP
                    verticalArrangement = Arrangement.Center,
                    horizontalAlignment = Alignment.CenterHorizontally
                ) {
-                   Text("Dashboard")
+                   Text("Dashboard ${userDataModel.displayName}")
                }
            }
 

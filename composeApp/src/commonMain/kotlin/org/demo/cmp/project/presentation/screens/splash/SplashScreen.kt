@@ -15,9 +15,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.get.set.coremodels.models.UserDataModel
 import demo_cmp_project.composeapp.generated.resources.Res
 import com.get.set.coremodule.BasePage
 import com.get.set.coremodule.DataState
+import com.get.set.coremodule.JsonSerializerUtil
 import com.get.set.coremodule.navigations.NavigatorUtil
 import com.get.set.coremodule.navigations.Screens
 import com.get.set.designsystem.util.AppColors
@@ -31,7 +33,15 @@ class SplashScreen(splashViewModel: SplashViewModel) : BasePage<SplashViewModel>
     override fun Content(paddingValues: PaddingValues, viewModel: SplashViewModel) {
             val stateValue = viewModel.navigateToLogin.collectAsState()
             if(stateValue.value.dataState == DataState.SUCCESS) {
-                NavigatorUtil.PushNamedAndRemoveUntil(Screens.Dashboard, Screens.Splash)
+                stateValue.value.userModel?.let {
+                    NavigatorUtil.PushNamedAndRemoveUntil(Screens.Dashboard.createRoute(
+                        JsonSerializerUtil.parseToJson(UserDataModel(
+                            email = it.email,
+                            displayName = it.displayName,
+                            username = it.username
+                        ))
+                    ), Screens.Splash)
+                }
             }
             if(stateValue.value.dataState == DataState.FAILED) {
                 NavigatorUtil.PushNamedAndRemoveUntil(Screens.Login, Screens.Splash)
