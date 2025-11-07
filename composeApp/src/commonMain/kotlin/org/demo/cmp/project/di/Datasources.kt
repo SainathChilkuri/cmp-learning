@@ -7,25 +7,19 @@ import com.get.set.database.data.datasource.local_datasource.LocalDataSourceImpl
 import org.demo.cmp.project.core.AppDatabaseBuilder
 import com.get.set.auth.data.datasource.remote_datasource.auth.AuthDataSource
 import com.get.set.auth.data.datasource.remote_datasource.auth.AuthDatasourceImpl
-import org.demo.cmp.project.core.GoogleSignInUtil
+import org.demo.cmp.project.core.GoogleSignInUtility
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val datasources = module {
-
     single <RoomDatabase.Builder<AppDatabase>>{
         AppDatabaseBuilder.getDatabaseBuilder()
     }
-
     single<LocalDataSource> {
         LocalDataSourceImpl(get())
     } bind LocalDataSource::class
 
     single<AuthDataSource> {
-        AuthDatasourceImpl()
+        AuthDatasourceImpl(GoogleSignInUtility.instance())
     } bind AuthDataSource::class
-
-    single {
-        GoogleSignInUtil()
-    }
 }

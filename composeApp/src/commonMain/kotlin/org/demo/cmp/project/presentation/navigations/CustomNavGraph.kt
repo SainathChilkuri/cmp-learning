@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import com.get.set.coremodule.navigations.Navigator
 import com.get.set.coremodule.navigations.Screens
 import org.demo.cmp.project.presentation.screens.dashboard.DashboardScreen
-import org.demo.cmp.project.presentation.screens.login.LoginScreen
+import com.get.set.auth.presentation.login.LoginScreen
 import org.demo.cmp.project.presentation.screens.splash.SplashScreen
 import org.koin.core.Koin
 
@@ -27,6 +27,8 @@ fun CustomNavGraph(navController: NavHostController, koin: Koin) {
           composable(Screens.Dashboard.route) {
               DashboardScreen(dashboardViewModel = koin.get()).Draw()
           }
+
+
       }
   }
 }

@@ -2,13 +2,14 @@ package com.get.set.auth.data.datasource.remote_datasource.auth
 
 import com.get.set.auth.data.entity.UserEntity
 import com.get.set.coremodule.AppCustomException
-import com.get.set.firebasedatasource.model.GoogleAccountData
+import com.get.set.firebasedatasource.core.FirebaseAuthWithGoogle
 import com.get.set.firebasedatasource.model.GoogleAccountData
 
-class AuthDatasourceImpl(val firebaseAuthWithGoogle: FirebaseAuthWithGoogle): AuthDataSource() {
+
+class AuthDatasourceImpl(private val firebaseAuthWithGoogle: FirebaseAuthWithGoogle): AuthDataSource() {
     override suspend fun signInWithGoogle(): UserEntity {
         try{
-             val data: GoogleAccountData? = GoogleSignInUtil.signIn();
+             val data: GoogleAccountData? = firebaseAuthWithGoogle.signIn();
             if(data?.email != null) {
                 return  UserEntity(
                     username = data.username,

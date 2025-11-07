@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.gms.google.service)
 }
 
 // Create a variable called keystorePropertiesFile, and initialize it to your
@@ -50,6 +51,7 @@ kotlin {
             implementation(project(":designSystem"))
             implementation(project(":auth"))
             implementation(project(":firebaseDatasource"))
+            implementation(project(":coreModels"))
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
@@ -58,6 +60,10 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+
+
+            ///firebase dependencies
+            implementation(project.dependencies.platform(libs.firebase.bom))
 
             ///nav deps
             implementation(libs.androidx.navigation.compose)

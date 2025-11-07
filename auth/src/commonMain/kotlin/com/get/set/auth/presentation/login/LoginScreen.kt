@@ -1,4 +1,4 @@
-package org.demo.cmp.project.presentation.screens.login
+package com.get.set.auth.presentation.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

@@ -6,7 +6,7 @@ import com.get.set.database.core.AppDatabase
 
 
 actual object AppDatabaseBuilder {
-    actual suspend fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
+    actual fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
         return buildIosDatabaseBuilder()
     }
 }

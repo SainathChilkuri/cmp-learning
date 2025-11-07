@@ -3,7 +3,7 @@ package com.get.set.coremodule
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import com.get.set.coremodule.util.AppColors
+import androidx.compose.ui.graphics.Color
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 abstract class BasePage<V : BaseViewModel>(val viewModel: V ) {
@@ -12,7 +12,7 @@ abstract class BasePage<V : BaseViewModel>(val viewModel: V ) {
     @Composable
     fun Draw() {
          Scaffold (
-             containerColor = AppColors.white,
+             containerColor = Color.White,
             topBar = { TopAppBarUnit() }
         ) { innerPadding ->
             Content(paddingValues = innerPadding, viewModel)

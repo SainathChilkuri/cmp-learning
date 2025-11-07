@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.get.set.coremodule.BasePage
-import org.demo.cmp.project.utils.SafeArea
+import com.get.set.designsystem.util.SafeArea
 
 class DashboardScreen(private val dashboardViewModel: DashboardViewModel): BasePage<DashboardViewModel>(viewModel = dashboardViewModel) {
 

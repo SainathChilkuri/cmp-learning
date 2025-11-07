@@ -29,7 +29,7 @@ class SplashScreen(splashViewModel: SplashViewModel) : BasePage<SplashViewModel>
 
     @Composable
     override fun Content(paddingValues: PaddingValues, viewModel: SplashViewModel) {
-        val stateValue = viewModel.navigateToLogin.collectAsState()
+            val stateValue = viewModel.navigateToLogin.collectAsState()
             if(stateValue.value.dataState == DataState.SUCCESS) {
                 NavigatorUtil.PushNamedAndRemoveUntil(Screens.Dashboard, Screens.Splash)
             }

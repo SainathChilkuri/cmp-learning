@@ -1,9 +1,7 @@
 package org.demo.cmp.project.core
 
-import com.get.set.firebasedatasource.model.GoogleAccountData
+import com.get.set.firebasedatasource.core.FirebaseAuthWithGoogle
 
-expect class GoogleSignInUtil() {
-    suspend fun signIn(): GoogleAccountData?
-
-    suspend fun signOut()
+expect object GoogleSignInUtility {
+     fun instance() : FirebaseAuthWithGoogle
 }

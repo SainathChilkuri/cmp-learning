@@ -1,5 +1,6 @@
 package org.demo.cmp.project.di
 
+import com.get.set.auth.data.repositories.AuthRepositoryImpl
 import com.get.set.auth.domain.repositories.AuthRepository
 import org.koin.dsl.bind
 import org.koin.dsl.module

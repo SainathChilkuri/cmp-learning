@@ -14,8 +14,14 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 
-object FirebaseAuthWithGoogle {
-    suspend fun signInOnAndroid(context: Context): GoogleAccountData? {
+actual class FirebaseAuthWithGoogle {
+    private lateinit var context: Context;
+
+    fun setContext(context: Context) {
+        this.context = context;
+    }
+
+    actual suspend fun signIn(): GoogleAccountData? {
         return withContext(Dispatchers.IO) {
             try {
                 // Instantiate a Google sign-in request
@@ -55,7 +61,7 @@ object FirebaseAuthWithGoogle {
         }
     }
 
-    suspend fun signOutOnAndroid() {
+    actual suspend fun signOut() {
         FirebaseAuth.getInstance().signOut();
     }
 }
