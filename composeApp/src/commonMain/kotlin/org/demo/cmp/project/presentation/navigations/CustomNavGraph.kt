@@ -5,10 +5,11 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import org.demo.cmp.project.presentation.screens.login.LoginScreen
-import org.demo.cmp.project.presentation.screens.login.LoginViewModel
+import com.get.set.coremodule.navigations.Navigator
+import com.get.set.coremodule.navigations.Screens
+import org.demo.cmp.project.presentation.screens.dashboard.DashboardScreen
+import com.get.set.auth.presentation.login.LoginScreen
 import org.demo.cmp.project.presentation.screens.splash.SplashScreen
-import org.demo.cmp.project.presentation.screens.splash.SplashViewModel
 import org.koin.core.Koin
 
 @Composable
@@ -22,6 +23,12 @@ fun CustomNavGraph(navController: NavHostController, koin: Koin) {
           composable(Screens.Login.route) {
               LoginScreen(loginViewModel = koin.get()).Draw()
           }
+
+          composable(Screens.Dashboard.route) {
+              DashboardScreen(dashboardViewModel = koin.get()).Draw()
+          }
+
+
       }
   }
 }

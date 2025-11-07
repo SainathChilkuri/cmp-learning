@@ -16,6 +16,14 @@ navVersion = "2.9.0"
 koin = "4.1.1"
 firebase-bom-version = "32.4.1"
 gms-service = "4.4.4"
+room = "2.8.3"
+sqlite = "2.6.1"
+ksp = "2.2.20-Beta1-2.0.2"
+kotlinStdlib = "2.2.20"
+runner = "1.5.2"
+core = "1.5.0"
+roomRuntimeAndroid = "2.8.3"
+firebaseCommonKtx = "22.0.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -32,6 +40,14 @@ androidx-navigation-compose = { module = "org.jetbrains.androidx.navigation:navi
 insert-koin = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 firebase-bom = {module ="com.google.firebase:firebase-bom", version.ref = 'firebase-bom-version'}
 firebase-analytics = {module ="com.google.firebase:firebase-analytics"}
+androidx-sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlinStdlib" }
+androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
+androidx-core = { group = "androidx.test", name = "core", version.ref = "core" }
+androidx-room-runtime-android = { group = "androidx.room", name = "room-runtime-android", version.ref = "roomRuntimeAndroid" }
+firebase-common-ktx = { group = "com.google.firebase", name = "firebase-common-ktx", version.ref = "firebaseCommonKtx" }
 
 
 
@@ -42,3 +58,6 @@ composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMul
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 gms-google-service = { id = "com.google.gms.google-services", version.ref = "gms-service" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+androidx-room = { id = "androidx.room", version.ref = "room" }
+android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }

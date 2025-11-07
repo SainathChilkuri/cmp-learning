@@ -7,7 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.google.firebase.FirebaseApp
+import com.get.set.firebasedatasource.core.FirebaseInstance
 import org.demo.cmp.project.di.Koin
 
 class MainActivity : ComponentActivity() {
@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         appContext = this
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        FirebaseApp.initializeApp(this)
+        FirebaseInstance.initialize(this)
         Koin.initKoin()
         setContent {
             App()

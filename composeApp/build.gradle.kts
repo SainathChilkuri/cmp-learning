@@ -42,20 +42,16 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-
-            ///firebase dependencies
-            implementation(project.dependencies.platform(libs.firebase.bom))
-            implementation(libs.firebase.analytics)
-            // Add the dependency for the Firebase Authentication library
-            // When using the BoM, you don't specify versions in Firebase library dependencies
-            implementation("com.google.firebase:firebase-auth")
-
-            // Also add the dependencies for the Credential Manager libraries and specify their versions
-            implementation("androidx.credentials:credentials:1.3.0")
-            implementation("androidx.credentials:credentials-play-services-auth:1.3.0")
-            implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
+            implementation(project(":firebaseDatasource"))
         }
+
         commonMain.dependencies {
+            implementation(project(":localDatabase"))
+            implementation(project(":coreModule"))
+            implementation(project(":designSystem"))
+            implementation(project(":auth"))
+            implementation(project(":firebaseDatasource"))
+            implementation(project(":coreModels"))
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
@@ -65,11 +61,18 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
+
+            ///firebase dependencies
+            implementation(project.dependencies.platform(libs.firebase.bom))
+
             ///nav deps
             implementation(libs.androidx.navigation.compose)
 
-            ///for DI
             implementation(libs.insert.koin)
+
+            //Room database
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.androidx.sqlite.bundled)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
