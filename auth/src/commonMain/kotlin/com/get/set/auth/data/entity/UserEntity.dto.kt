@@ -1,4 +1,8 @@
 package com.get.set.auth.data.entity
 
-data class UserEntity(val username: String? = null,val email: String?,val displayName: String?) {
+import com.get.set.auth.domain.models.UserModel
+
+class UserEntity(private val usernameValue: String? = null, private val emailValue: String?, private val displayNameValue: String?): UserModel(
+    username = usernameValue?: "", email = emailValue?: "", displayName = displayNameValue?: ""
+) {
 }

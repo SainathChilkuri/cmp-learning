@@ -1,5 +1,5 @@
 package com.get.set.auth.domain.models
 
 
-data class UserModel(val email: String, val username: String, val displayName: String){
+open class UserModel(var email: String, var username: String, var displayName: String){
 }

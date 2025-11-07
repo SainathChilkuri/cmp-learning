@@ -10,9 +10,12 @@ import com.get.set.coremodule.executeUseCase
 import com.get.set.auth.domain.models.UserModel
 import com.get.set.auth.domain.usecases.auth.GoogleSignInUseCase
 import com.get.set.auth.domain.usecases.auth.GoogleSignInUseCaseParams
+import com.get.set.coremodels.models.UserDataModel
+import com.get.set.database.domain.usecases.StoreUserDataUseCase
+import com.get.set.database.domain.usecases.StoreUserDataUseCaseParams
 import org.demo.cmp.project.presentation.screens.login.LoginScreenDataState
 
-class LoginViewModel(private val signInUseCase: GoogleSignInUseCase): BaseViewModel() {
+class LoginViewModel(private val signInUseCase: GoogleSignInUseCase,private val storeUserDataUseCase: StoreUserDataUseCase): BaseViewModel() {
 
 
     private val loginScreenState =  MutableStateFlow<LoginScreenDataState>(
@@ -30,6 +33,13 @@ class LoginViewModel(private val signInUseCase: GoogleSignInUseCase): BaseViewMo
             executeUseCase<GoogleSignInUseCaseParams, UserModel, AppCustomException, GoogleSignInUseCase>(
                 onSuccess = {
                     loginScreenState.value = loginScreenState.value.copy(userModel = it, dataState = DataState.SUCCESS);
+                    storeUserDataUseCase.execute(StoreUserDataUseCaseParams(
+                        UserDataModel(
+                            displayName = it.displayName,
+                            email = it.email,
+                            username = it.username
+                        )
+                    ))
 
                 },
                 onError = {

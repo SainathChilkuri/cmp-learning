@@ -12,9 +12,9 @@ class AuthDatasourceImpl(private val firebaseAuthWithGoogle: FirebaseAuthWithGoo
              val data: GoogleAccountData? = firebaseAuthWithGoogle.signIn();
             if(data?.email != null) {
                 return  UserEntity(
-                    username = data.username,
-                    displayName = data.displayName ?: "",
-                    email = data.email ?: ""
+                    usernameValue = data.username,
+                    displayNameValue = data.displayName ?: "",
+                    emailValue = data.email ?: ""
                 )
             }
             throw AppCustomException("Unable to sign in with google", tag = "Auth")

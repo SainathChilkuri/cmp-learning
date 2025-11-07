@@ -61,6 +61,8 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.kotlin.stdlib)
+                implementation(project(":coreModule"))
+                implementation(project(":coreModels"))
                 // Add KMP dependencies here
 
                 //Room database

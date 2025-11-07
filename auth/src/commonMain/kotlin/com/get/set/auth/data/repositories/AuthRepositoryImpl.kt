@@ -8,19 +8,10 @@ import com.get.set.database.data.datasource.local_datasource.LocalDataSource
 import com.get.set.auth.domain.models.UserModel
 import com.get.set.auth.domain.repositories.AuthRepository
 
-class AuthRepositoryImpl(private val localDataSource: LocalDataSource, private val authDataSource: AuthDataSource): AuthRepository() {
+class AuthRepositoryImpl(private val authDataSource: AuthDataSource): AuthRepository() {
     override suspend fun signInWithGoogle(): UserModel {
         val userEntity: UserEntity = authDataSource.signInWithGoogle();
         AppLogs.info("User Details---->${userEntity.displayName}","Auth")
-        localDataSource.saveLoggedInUser(UserTableEntity(
-            displayName = userEntity.displayName ?: "",
-            email = userEntity.email?: "",
-            username = userEntity.username ?: ""
-        ));
-        return  UserModel(
-            email = userEntity.email ?:"",
-            displayName = userEntity.displayName?:"",
-            username = userEntity.username ?: ""
-        )
+        return userEntity
     }
 }
