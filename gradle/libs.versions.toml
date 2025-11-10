@@ -25,6 +25,7 @@ core = "1.5.0"
 roomRuntimeAndroid = "2.8.3"
 firebaseCommonKtx = "22.0.1"
 kotlinSerialization = "1.9.0"
+kotlinSerializationPluginVersion = "2.2.21"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -63,3 +64,4 @@ gms-google-service = { id = "com.google.gms.google-services", version.ref = "gms
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 androidx-room = { id = "androidx.room", version.ref = "room" }
 android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
+kotlin-serializer-plugin = { id = "plugin.serialization", version.ref = "kotlinSerializationPluginVersion" }
