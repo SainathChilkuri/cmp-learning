@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.android.kotlin.multiplatform.library)
+    kotlin("plugin.serialization") version "2.2.21"
 }
 
 kotlin {
@@ -60,6 +61,10 @@ kotlin {
             dependencies {
                 implementation(libs.kotlin.stdlib)
                 // Add KMP dependencies here
+
+
+                //serialization
+                implementation(libs.kotlin.serialization)
             }
         }
 

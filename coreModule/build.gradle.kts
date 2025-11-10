@@ -74,6 +74,11 @@ kotlin {
                 implementation(compose.components.uiToolingPreview)
 
 
+                //serialization
+                implementation(libs.kotlin.serialization)
+
+
+
                 ///Navigation
                 implementation(libs.androidx.navigation.compose)
             }
