@@ -13,6 +13,7 @@ import com.get.set.coremodule.navigations.Screens
 import org.demo.cmp.project.presentation.screens.dashboard.DashboardScreen
 import com.get.set.auth.presentation.login.LoginScreen
 import com.get.set.coremodels.models.UserDataModel
+import com.get.set.coremodule.AppLogs
 import org.demo.cmp.project.presentation.screens.splash.SplashScreen
 import org.koin.core.Koin
 
@@ -30,7 +31,7 @@ fun CustomNavGraph(navController: NavHostController, koin: Koin) {
 
           composable(Screens.Dashboard.route,
               arguments = listOf(navArgument("data") { type = NavType.StringType })) { backStackEntry ->
-              NavBackStackEntry.fetchData<UserDataModel>("data")?.let {
+              backStackEntry.fetchData<UserDataModel>("data")?.let {
                   DashboardScreen(dashboardViewModel = koin.get(), userDataModel = it).Draw()
               }
           }

@@ -3,6 +3,7 @@ package com.get.set.database.data.datasource.local_datasource
 
 import UserTableEntity
 import androidx.room.RoomDatabase
+import com.get.set.coremodule.AppCustomException
 import com.get.set.database.core.AppDatabase
 import com.get.set.database.core.DatabaseException
 
@@ -14,9 +15,9 @@ class LocalDataSourceImpl(private val appDatabase: RoomDatabase.Builder<AppDatab
             if(users.isNotEmpty()) {
                 return users[0]
             }
-            throw DatabaseException("No user found", tag = "Auth")
+            throw AppCustomException("No user found", tag = "Auth")
         }catch (e: Exception) {
-            throw DatabaseException("No user found", tag = "Auth")
+            throw AppCustomException("No user found", tag = "Auth")
         }
     }
 
@@ -27,9 +28,9 @@ class LocalDataSourceImpl(private val appDatabase: RoomDatabase.Builder<AppDatab
             if(result>=1) {
                 return true;
             }
-            throw DatabaseException("No user found", tag = "Auth")
+            throw AppCustomException("No user found", tag = "Auth")
         }catch (e: Exception) {
-            throw DatabaseException(e.message ?:"Something went wrong", tag = "Auth")
+            throw AppCustomException(e.message ?:"Something went wrong", tag = "Auth")
         }
     }
 }
