@@ -21,9 +21,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.get.set.auth.presentation.login.LoginViewModel
+import com.get.set.coremodels.models.UserDataModel
 import com.get.set.coremodule.AppLogs
 import com.get.set.coremodule.BasePage
 import com.get.set.coremodule.DataState
+import com.get.set.coremodule.JsonSerializerUtil
 import com.get.set.coremodule.navigations.NavigatorUtil
 import com.get.set.coremodule.navigations.Screens
 import com.get.set.designsystem.components.AppText
@@ -42,12 +44,16 @@ class LoginScreen (private val loginViewModel: LoginViewModel): BasePage<LoginVi
 
     @Composable
     override fun Content(paddingValues: PaddingValues, viewModel: LoginViewModel) {
-        val email = remember { mutableStateOf("") }
-        val password = remember { mutableStateOf("") }
         val loginScreenState = viewModel.loginScreenStateValue.collectAsState();
 
         if(loginScreenState.value.dataState == DataState.SUCCESS) {
-                NavigatorUtil.PushNamedAndRemoveUntil(Screens.Dashboard, Screens.Login)
+                NavigatorUtil.PushNamedAndRemoveUntil(Screens.Dashboard.createRoute(JsonSerializerUtil.parseToJson<UserDataModel>(
+                    UserDataModel(
+                        email = loginScreenState.value.userModel?.email,
+                        displayName = loginScreenState.value.userModel?.displayName,
+                        username = loginScreenState.value.userModel?.username
+                    )
+                )), Screens.Login)
         }
         SafeArea { modifier ->
             Box(

@@ -12,7 +12,7 @@ val viewModel = module {
   }
 
     factory <LoginViewModel> {
-        LoginViewModel(get<GoogleSignInUseCase>(), get())
+        LoginViewModel(get<GoogleSignInUseCase>(), get(), get())
     }
 
     factory <DashboardViewModel> {

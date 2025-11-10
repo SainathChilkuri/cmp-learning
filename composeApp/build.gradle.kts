@@ -61,6 +61,9 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
+            implementation("dev.gitlive:firebase-firestore:2.4.0")
+
+
 
             ///firebase dependencies
             implementation(project.dependencies.platform(libs.firebase.bom))
@@ -76,6 +79,10 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+        }
+
+        iosMain.dependencies {
+
         }
     }
 }

@@ -27,7 +27,7 @@ actual class FirebaseAuthWithGoogle {
                 // Instantiate a Google sign-in request
                 val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
                     .setFilterByAuthorizedAccounts(false)
-                    .setAutoSelectEnabled(true)
+                    .setAutoSelectEnabled(false)
                     .setServerClientId("533057273649-k96qtl36v4ktrgnf259f6ni7iogqtsh0.apps.googleusercontent.com")
                     .build()
 

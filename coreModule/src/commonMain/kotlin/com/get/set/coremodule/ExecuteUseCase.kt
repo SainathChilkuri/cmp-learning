@@ -10,10 +10,12 @@ suspend inline fun <P,S, reified E: Exception,U: BaseUseCase<S, P>> executeUseCa
         val result: S = useCase.execute(params);
         onSuccess(result);
     }catch(e: AppCustomException) {
+        AppLogs.info("Login Screen AppCustomException ${e.message}","Splash 1")
        if(e is E) {
            onError(e)
        }
     } catch (e: Exception) {
+        AppLogs.info("Login Screen Exception ${e.message}","Splash 1")
         if(e is E) {
             onError(e)
         }

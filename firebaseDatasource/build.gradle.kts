@@ -1,13 +1,16 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.android.kotlin.multiplatform.library)
+    kotlin("plugin.serialization") version "2.2.21"
+
 }
 
 kotlin {
-
     // Target declarations - add or remove as needed below. These define
     // which platforms this KMP module supports.
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
+    jvmToolchain(17)
+
     androidLibrary {
         namespace = "com.get.set.firebasedatasource"
         compileSdk = 36
@@ -61,6 +64,9 @@ kotlin {
                 implementation(libs.kotlin.stdlib)
 
                 implementation(project(":coreModule"))
+                implementation("dev.gitlive:firebase-firestore:2.4.0")
+
+
                 // Add KMP dependencies here
             }
         }
