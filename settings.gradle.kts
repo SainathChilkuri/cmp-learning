@@ -1,6 +1,7 @@
 rootProject.name = "demo_cmp_project"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
+
 pluginManagement {
     repositories {
         google {
@@ -35,3 +36,4 @@ include(":auth")
 include(":designSystem")
 include(":firebaseDatasource")
 include(":coreModels")
+include(":taskManagement")

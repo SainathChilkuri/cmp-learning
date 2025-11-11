@@ -1,8 +1,10 @@
 package org.demo.cmp.project.di
 
 import com.get.set.auth.domain.usecases.auth.GoogleSignInUseCase
-import org.demo.cmp.project.presentation.screens.dashboard.DashboardViewModel
+import com.get.set.taskmanagement.presentation.dashboard.DashboardViewModel
 import com.get.set.auth.presentation.login.LoginViewModel
+import com.get.set.taskmanagement.presentation.bottom_nav_bar.AppBottomNavigationBar
+import com.get.set.taskmanagement.presentation.bottom_nav_bar.BottomNavBarViewModel
 import org.demo.cmp.project.presentation.screens.splash.SplashViewModel
 import org.koin.dsl.module
 
@@ -17,5 +19,9 @@ val viewModel = module {
 
     factory <DashboardViewModel> {
         DashboardViewModel()
+    }
+
+    factory <BottomNavBarViewModel> {
+        BottomNavBarViewModel()
     }
 }

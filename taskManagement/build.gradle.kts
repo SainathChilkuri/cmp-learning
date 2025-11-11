@@ -12,7 +12,7 @@ kotlin {
     // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     androidLibrary {
         experimentalProperties["android.experimental.kmp.enableAndroidResources"] = true
-        namespace = "com.get.set.designsystem"
+        namespace = "com.get.set.taskmanagement"
         compileSdk = 36
         minSdk = 24
 
@@ -33,7 +33,7 @@ kotlin {
     // A step-by-step guide on how to include this library in an XCode
     // project can be found here:
     // https://developer.android.com/kotlin/multiplatform/migrate
-    val xcfName = "designSystemKit"
+    val xcfName = "taskManagementKit"
 
     iosX64 {
         binaries.framework {
@@ -62,7 +62,11 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.kotlin.stdlib)
+                implementation(project(":coreModule"))
+                implementation(project(":designSystem"))
+                implementation(project(":coreModels"))
                 // Add KMP dependencies here
+
 
                 // Add KMP dependencies here
                 implementation(libs.androidx.lifecycle.viewmodelCompose)

@@ -13,14 +13,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.get.set.auth.presentation.login.LoginViewModel
 import com.get.set.coremodels.models.UserDataModel
 import com.get.set.coremodule.AppLogs
 import com.get.set.coremodule.BasePage
@@ -33,7 +30,7 @@ import com.get.set.designsystem.components.GoogleSignIn
 import com.get.set.designsystem.components.VerticalSpacer
 import com.get.set.designsystem.util.AppColors
 import com.get.set.designsystem.util.DSAsset
-import com.get.set.designsystem.util.SafeArea
+import com.get.set.coremodule.SafeArea
 import demo_cmp_project.auth.generated.resources.Res
 import demo_cmp_project.auth.generated.resources.confused_about_managing_time
 import demo_cmp_project.auth.generated.resources.enjoy_your_time
@@ -80,7 +77,7 @@ class LoginScreen (private val loginViewModel: LoginViewModel): BasePage<LoginVi
                         AppText(stringResource(Res.string.confused_about_managing_time), size = 14, fontWeight = FontWeight.W400,color = AppColors.grey, textAlign = TextAlign.Center)
                     }
                     Spacer(modifier = Modifier.weight(1f)) // Pushes the button to the bottom
-                    when(loginScreenState.value.dataState) {
+                    when (loginScreenState.value.dataState) {
                         DataState.LOADING -> {
                             CircularProgressIndicator()
                         }

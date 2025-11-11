@@ -26,6 +26,7 @@ roomRuntimeAndroid = "2.8.3"
 firebaseCommonKtx = "22.0.1"
 kotlinSerialization = "1.9.0"
 kotlinSerializationPluginVersion = "2.2.21"
+composeHotReload = "1.0.0-rc03"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -54,6 +55,7 @@ kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-j
 
 
 
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
@@ -65,3 +67,4 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 androidx-room = { id = "androidx.room", version.ref = "room" }
 android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 kotlin-serializer-plugin = { id = "plugin.serialization", version.ref = "kotlinSerializationPluginVersion" }
+composeHotReload = { id = "org.jetbrains.compose.hot-reload", version.ref = "composeHotReload"}

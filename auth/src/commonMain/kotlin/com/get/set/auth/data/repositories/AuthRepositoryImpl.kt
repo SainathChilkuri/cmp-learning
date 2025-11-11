@@ -1,10 +1,8 @@
 package com.get.set.auth.data.repositories
 
-import UserTableEntity
 import com.get.set.coremodule.AppLogs
 import com.get.set.auth.data.datasource.remote_datasource.auth.AuthDataSource
 import com.get.set.auth.data.entity.UserEntity
-import com.get.set.database.data.datasource.local_datasource.LocalDataSource
 import com.get.set.auth.domain.models.UserModel
 import com.get.set.auth.domain.repositories.AuthRepository
 

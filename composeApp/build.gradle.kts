@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.gms.google.service)
+    alias(libs.plugins.composeHotReload)
 }
 
 // Create a variable called keystorePropertiesFile, and initialize it to your
@@ -52,6 +53,7 @@ kotlin {
             implementation(project(":auth"))
             implementation(project(":firebaseDatasource"))
             implementation(project(":coreModels"))
+            implementation(project(":taskManagement"))
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)

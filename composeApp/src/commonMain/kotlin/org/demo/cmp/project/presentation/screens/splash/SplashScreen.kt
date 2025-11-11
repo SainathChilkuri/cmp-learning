@@ -16,19 +16,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.get.set.coremodels.models.UserDataModel
-import com.get.set.coremodule.AppLogs
-import demo_cmp_project.composeapp.generated.resources.Res
 import com.get.set.coremodule.BasePage
 import com.get.set.coremodule.DataState
 import com.get.set.coremodule.JsonSerializerUtil
 import com.get.set.coremodule.navigations.NavigatorUtil
 import com.get.set.coremodule.navigations.Screens
-import com.get.set.designsystem.components.AppText
 import com.get.set.designsystem.util.AppColors
 import com.get.set.designsystem.util.DSAsset
-import com.get.set.designsystem.util.SafeArea
+import com.get.set.coremodule.SafeArea
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 class SplashScreen(splashViewModel: SplashViewModel) : BasePage<SplashViewModel>(viewModel = splashViewModel) {
 

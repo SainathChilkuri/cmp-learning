@@ -1,4 +1,4 @@
-package org.demo.cmp.project.presentation.screens.dashboard
+package com.get.set.taskmanagement.presentation.dashboard
 
 import com.get.set.coremodule.BaseViewModel
 

@@ -12,4 +12,8 @@ object AppColors {
     val background = Color(0xFFF9F9F9)
     val error = Color(0xFFB00020)
     val blue = Color(0xFF1062e6)
+    val ghostWhite = Color(0xFFF8F6FF)
+    val primaryColor = Color(0xFF4B7BE5)
+    val blueCoala = Color(0xFF0093E9)
+    val pearlAqua = Color(0xFF80D0C7)
 }
