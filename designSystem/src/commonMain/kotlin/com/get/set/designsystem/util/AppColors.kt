@@ -14,6 +14,7 @@ object AppColors {
     val blue = Color(0xFF1062e6)
     val ghostWhite = Color(0xFFF8F6FF)
     val primaryColor = Color(0xFF4B7BE5)
+    val primaryColorShade = Color(0xFF91acef)
     val blueCoala = Color(0xFF0093E9)
     val pearlAqua = Color(0xFF80D0C7)
 }

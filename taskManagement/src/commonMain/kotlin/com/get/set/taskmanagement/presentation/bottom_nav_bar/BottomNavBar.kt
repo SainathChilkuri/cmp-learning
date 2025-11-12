@@ -17,10 +17,21 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Book
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Man
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.SupervisedUserCircle
+import androidx.compose.material.icons.outlined.Book
+import androidx.compose.material.icons.outlined.CalendarMonth
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Man
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.sharp.Home
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,15 +49,14 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.get.set.coremodule.BasePage
 import com.get.set.designsystem.util.AppColors
-import com.get.set.designsystem.util.DSAsset
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.vectorResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import com.get.set.taskmanagement.presentation.bottom_nav_bar.widget.BottomNavIcon
 
-class AppBottomNavigationBar(bottomNavBarViewModel: BottomNavBarViewModel): BasePage<BottomNavBarViewModel>(bottomNavBarViewModel) {
+class AppBottomNavigationBar(bottomNavBarViewModel: BottomNavBarViewModel, val onTabChange: (Int) -> Unit): BasePage<BottomNavBarViewModel>(bottomNavBarViewModel) {
 
     @Composable
     override fun Content(paddingValues: PaddingValues, viewModel: BottomNavBarViewModel) {
+        val tabPosition = viewModel.currentTabPositionValue.collectAsState()
+
         Box {
             Box(
                 modifier = Modifier
@@ -57,32 +67,47 @@ class AppBottomNavigationBar(bottomNavBarViewModel: BottomNavBarViewModel): Base
                     modifier = Modifier.height(65.dp).fillMaxWidth()
                         .background(color = AppColors.ghostWhite)
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.Home,
-                        contentDescription = "Home",
-                        tint = AppColors.primaryColor,
-                        modifier = Modifier.fillMaxHeight(),
+                    BottomNavIcon(
+                        selectedIcon = Icons.Filled.Home,
+                        unselectedIcon = Icons.Outlined.Home,
+                        isSelected = tabPosition.value == 0,
+                        onTap = {
+                            viewModel.onTabChange(0);
+                            onTabChange(0)
+                        }
                     )
-                    Icon(
-                        imageVector = Icons.Default.Book,
-                        contentDescription = "Home",
-                        modifier = Modifier.fillMaxHeight()
+                    BottomNavIcon(
+                        selectedIcon = Icons.Filled.CalendarMonth,
+                        unselectedIcon = Icons.Outlined.CalendarMonth,
+                        isSelected = tabPosition.value == 1,
+                        onTap = {
+                            viewModel.onTabChange(1);
+                            onTabChange(1)
+                        }
                     )
                     Spacer(modifier = Modifier.width(40.dp))
-                    Icon(
-                        imageVector = Icons.Default.Book,
-                        contentDescription = "Home",
-                        modifier = Modifier.fillMaxHeight()
+                    BottomNavIcon(
+                        selectedIcon = Icons.Filled.Book,
+                        unselectedIcon = Icons.Outlined.Book,
+                        isSelected = tabPosition.value == 2,
+                        onTap = {
+                            viewModel.onTabChange(2);
+                            onTabChange(2)
+                        }
                     )
-                    Icon(
-                        imageVector = Icons.Default.Book,
-                        contentDescription = "Home",
-                        modifier = Modifier.fillMaxHeight()
+                    BottomNavIcon(
+                        selectedIcon = Icons.Filled.Person,
+                        unselectedIcon = Icons.Outlined.Person,
+                        isSelected = tabPosition.value == 3,
+                        onTap = {
+                            viewModel.onTabChange(3);
+                            onTabChange(3)
+                        }
                     )
                 }
             }
 
-            FloatingActionButton(
+            Box(
                 modifier = Modifier.align(alignment = Alignment.BottomCenter).size(70.dp).offset(y = (-30).dp).background(
                     brush = Brush.linearGradient(
                         colors = listOf(
@@ -94,20 +119,14 @@ class AppBottomNavigationBar(bottomNavBarViewModel: BottomNavBarViewModel): Base
                     ),
                     shape = CircleShape,
                 ),
-                containerColor = Color.Transparent,
-                contentColor = Color.Transparent,
-                content = {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = "Add",
-                        tint = AppColors.white,
-                        modifier = Modifier.fillMaxHeight()
-                    )
-                },
-                onClick = {
-
-                }
-            )
+            ) {
+                Image(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Add",
+                    colorFilter = ColorFilter.tint(color = Color.White),
+                    modifier = Modifier.fillMaxHeight().align(alignment = Alignment.Center)
+                )
+            }
         }
     }
 }
