@@ -13,8 +13,7 @@ import androidx.compose.ui.Modifier
 @Composable
 fun SafeArea(content: @Composable (Modifier) -> Unit) {
     val modifier = Modifier.padding(
-        WindowInsets.statusBars
-            .add(WindowInsets.navigationBars)
+        WindowInsets.navigationBars
             .asPaddingValues()
     )
 

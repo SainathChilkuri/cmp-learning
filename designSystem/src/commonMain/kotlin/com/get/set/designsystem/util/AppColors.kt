@@ -17,4 +17,6 @@ object AppColors {
     val primaryColorShade = Color(0xFF91acef)
     val blueCoala = Color(0xFF0093E9)
     val pearlAqua = Color(0xFF80D0C7)
+    val lightGrey = Color(0xFFF5F5F5)
+    val grey002 = Color(0xFFA9A9A9)
 }

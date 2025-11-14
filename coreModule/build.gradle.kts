@@ -77,6 +77,9 @@ kotlin {
                 //serialization
                 implementation(libs.kotlin.serialization)
 
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.7.1")
+
+
 
 
                 ///Navigation

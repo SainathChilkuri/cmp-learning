@@ -67,7 +67,6 @@ kotlin {
                 implementation(project(":coreModels"))
                 // Add KMP dependencies here
 
-
                 // Add KMP dependencies here
                 implementation(libs.androidx.lifecycle.viewmodelCompose)
                 implementation(libs.androidx.lifecycle.runtimeCompose)

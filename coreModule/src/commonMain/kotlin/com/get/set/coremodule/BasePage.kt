@@ -24,7 +24,6 @@ abstract class BasePage<V : BaseViewModel>(val viewModel: V ) {
 
     protected lateinit var pagerState: PagerState
 
-    @Preview
     @Composable
     fun Draw() {
         SafeArea {
