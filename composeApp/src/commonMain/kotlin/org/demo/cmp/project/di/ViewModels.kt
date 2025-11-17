@@ -5,6 +5,7 @@ import com.get.set.taskmanagement.presentation.bottom_bar_page_view.BottomBarPag
 import com.get.set.auth.presentation.login.LoginViewModel
 import com.get.set.taskmanagement.presentation.bottom_nav_bar.BottomNavBarViewModel
 import com.get.set.taskmanagement.presentation.dashboard.DashboardViewModel
+import com.get.set.taskmanagement.presentation.task.TaskViewModel
 import org.demo.cmp.project.presentation.screens.splash.SplashViewModel
 import org.koin.dsl.module
 
@@ -27,5 +28,9 @@ val viewModel = module {
 
     factory <BottomNavBarViewModel> {
         BottomNavBarViewModel()
+    }
+
+    factory <TaskViewModel> {
+        TaskViewModel()
     }
 }

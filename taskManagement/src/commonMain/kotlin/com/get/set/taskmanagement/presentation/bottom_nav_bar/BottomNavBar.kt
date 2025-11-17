@@ -2,6 +2,7 @@ package com.get.set.taskmanagement.presentation.bottom_nav_bar
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -19,17 +20,11 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Man
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.SupervisedUserCircle
 import androidx.compose.material.icons.outlined.Book
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Man
 import androidx.compose.material.icons.outlined.Person
-import androidx.compose.material.icons.sharp.Home
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -48,13 +43,19 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.get.set.coremodule.BasePage
+import com.get.set.coremodule.navigations.Navigator
+import com.get.set.coremodule.navigations.NavigatorUtil
+import com.get.set.coremodule.navigations.Screens
 import com.get.set.designsystem.util.AppColors
 import com.get.set.taskmanagement.presentation.bottom_nav_bar.widget.BottomNavIcon
 
 class AppBottomNavigationBar(bottomNavBarViewModel: BottomNavBarViewModel, val onTabChange: (Int) -> Unit): BasePage<BottomNavBarViewModel>(bottomNavBarViewModel) {
 
+
+
     @Composable
     override fun Content(paddingValues: PaddingValues, viewModel: BottomNavBarViewModel) {
+
         val tabPosition = viewModel.currentTabPositionValue.collectAsState()
 
         Box {
@@ -118,7 +119,9 @@ class AppBottomNavigationBar(bottomNavBarViewModel: BottomNavBarViewModel, val o
                         end = Offset.Infinite
                     ),
                     shape = CircleShape,
-                ),
+                ).clickable {
+                    NavigatorUtil.pushNamed(Screens.Task);
+                }
             ) {
                 Image(
                     imageVector = Icons.Default.Add,

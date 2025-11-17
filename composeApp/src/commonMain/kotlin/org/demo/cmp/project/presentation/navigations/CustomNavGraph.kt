@@ -11,13 +11,16 @@ import com.get.set.coremodule.navigations.Navigator
 import com.get.set.coremodule.navigations.Screens
 import com.get.set.auth.presentation.login.LoginScreen
 import com.get.set.coremodels.models.UserDataModel
+import com.get.set.coremodule.navigations.NavigatorUtil
 import com.get.set.taskmanagement.presentation.bottom_bar_page_view.BottomBarPageView
+import com.get.set.taskmanagement.presentation.task.TaskScreen
 import org.demo.cmp.project.presentation.screens.splash.SplashScreen
 import org.koin.core.Koin
 
 @Composable
 fun CustomNavGraph(navController: NavHostController, koin: Koin) {
   CompositionLocalProvider(Navigator provides navController) {
+      NavigatorUtil.navHostController = Navigator.current;
       NavHost(navController = navController, startDestination = Screens.Splash.route) {
           composable(Screens.Splash.route) {
               SplashScreen(splashViewModel = koin.get()).Draw()
@@ -32,6 +35,10 @@ fun CustomNavGraph(navController: NavHostController, koin: Koin) {
               backStackEntry.fetchData<UserDataModel>("data")?.let {
                   BottomBarPageView(bottomBarPageViewModel = koin.get(), userDataModel = it, koin.get()).Draw()
               }
+          }
+
+          composable(Screens.Task.route) {
+              TaskScreen(taskViewModel = koin.get()).Draw()
           }
 
       }

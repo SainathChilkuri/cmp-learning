@@ -9,4 +9,6 @@ open class Screens(val route: String) {
     data object Dashboard : Screens("dashboard/{data}") {
         fun createRoute(data: String) = Screens("dashboard/$data")
     }
+
+    data object  Task : Screens("task")
 }

@@ -44,7 +44,7 @@ class LoginScreen (private val loginViewModel: LoginViewModel): BasePage<LoginVi
         val loginScreenState = viewModel.loginScreenStateValue.collectAsState();
 
         if(loginScreenState.value.dataState == DataState.SUCCESS) {
-                NavigatorUtil.PushNamedAndRemoveUntil(Screens.Dashboard.createRoute(JsonSerializerUtil.parseToJson<UserDataModel>(
+                NavigatorUtil.pushNamedAndRemoveUntil(Screens.Dashboard.createRoute(JsonSerializerUtil.parseToJson<UserDataModel>(
                     UserDataModel(
                         email = loginScreenState.value.userModel?.email,
                         displayName = loginScreenState.value.userModel?.displayName,

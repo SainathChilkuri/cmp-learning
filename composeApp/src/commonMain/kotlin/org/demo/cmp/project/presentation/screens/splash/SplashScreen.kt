@@ -33,7 +33,7 @@ class SplashScreen(splashViewModel: SplashViewModel) : BasePage<SplashViewModel>
             val stateValue = viewModel.navigateToLogin.collectAsState()
             if(stateValue.value.dataState == DataState.SUCCESS) {
                 stateValue.value.userModel?.let {
-                    NavigatorUtil.PushNamedAndRemoveUntil(Screens.Dashboard.createRoute(
+                    NavigatorUtil.pushNamedAndRemoveUntil(Screens.Dashboard.createRoute(
                         JsonSerializerUtil.parseToJson(UserDataModel(
                             email = it.email,
                             displayName = it.displayName,
@@ -43,7 +43,7 @@ class SplashScreen(splashViewModel: SplashViewModel) : BasePage<SplashViewModel>
                 }
             }
             if(stateValue.value.dataState == DataState.FAILED) {
-                NavigatorUtil.PushNamedAndRemoveUntil(Screens.Login, Screens.Splash)
+                NavigatorUtil.pushNamedAndRemoveUntil(Screens.Login, Screens.Splash)
             }
         SafeArea { modifier ->
             Box(

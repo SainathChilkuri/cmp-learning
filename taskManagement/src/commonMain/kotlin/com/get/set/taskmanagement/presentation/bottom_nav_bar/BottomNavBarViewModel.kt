@@ -9,6 +9,7 @@ class BottomNavBarViewModel: BaseViewModel() {
     private val currentTabPosition: MutableStateFlow<Int> =  MutableStateFlow(0);
     val currentTabPositionValue = currentTabPosition;
 
+
     fun onTabChange(tabPosition: Int) {
         if(currentTabPosition.value != tabPosition) {
             currentTabPosition.value = tabPosition
