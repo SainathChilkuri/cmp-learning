@@ -20,4 +20,15 @@ object AppColors {
     val lightGrey = Color(0xFFF5F5F5)
     val grey002 = Color(0xFFA9A9A9)
     val grey003 = Color(0xFF808080)
+
+
+    val randomColor001 = Color(0xFF764AF1)
+    val randomColor002 = Color(0xFFA760FF)
+    val randomColor003 = Color(0xFF947EC3)
+    val randomColor004 = Color(0xFFF56D91)
+    val randomColor005 = Color(0xFF92BA92)
+    val randomColor006 = Color(0xFFF8CB2E)
+    val randomColor007 = Color(0xFF525E75)
+    val randomColor008 = Color(0xFF8D8DAA)
+    val randomColor009 = Color(0xFF006E7F)
 }

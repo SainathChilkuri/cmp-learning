@@ -1,5 +1,6 @@
 package com.get.set.designsystem.components
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -18,18 +20,35 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.get.set.designsystem.util.AppColors
 import com.get.set.designsystem.util.poppins
 
 @Composable
-fun AppTextField(value: String, label: String?=null, onValueChange: (String) -> Unit, trailingIcon: @Composable() (() -> Unit)? = null, showLabelOnTop:Boolean = false,enabled: Boolean = true) {
+fun AppTextField(
+    value: String,
+    label: String? = null,
+    onValueChange: (String) -> Unit,
+    trailingIcon: @Composable() (() -> Unit)? = null,
+    showLabelOnTop: Boolean = false,
+    enabled: Boolean = true,
+    validator: ((String) -> String?)? = null
+) {
 
 
-    Column(horizontalAlignment = Alignment.Start,
-        modifier = Modifier.height(intrinsicSize = IntrinsicSize.Min)) {
-        if(showLabelOnTop) AppText(label?:"", size = 12, fontWeight = FontWeight.W500, color = AppColors.grey003, modifier = Modifier.padding(start = 3.dp))
+    Column(
+        horizontalAlignment = Alignment.Start,
+        modifier = Modifier.height(intrinsicSize = IntrinsicSize.Min)
+    ) {
+        if (showLabelOnTop) AppText(
+            label ?: "",
+            size = 12,
+            fontWeight = FontWeight.W500,
+            color = AppColors.grey003,
+            modifier = Modifier.padding(start = 3.dp)
+        )
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -49,10 +68,16 @@ fun AppTextField(value: String, label: String?=null, onValueChange: (String) -> 
                     fontSize = 16.sp,
                     fontWeight = FontWeight.W500
                 ),
+                isError = validator?.let {
+                    it(value)
+                } != null,
                 shape = RoundedCornerShape(0),
-                placeholder =  {
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Sentences
+                ),
+                placeholder = {
                     AppText(
-                        if(showLabelOnTop) "" else label ?: "",
+                        if (showLabelOnTop) "" else label ?: "",
                         color = AppColors.grey002,
                         size = 16,
                         fontWeight = FontWeight.W500
@@ -65,6 +90,9 @@ fun AppTextField(value: String, label: String?=null, onValueChange: (String) -> 
                     focusedContainerColor = Color.Transparent,
                     unfocusedContainerColor = Color.Transparent,
                     disabledContainerColor = Color.Transparent,
+                    errorPlaceholderColor = Color.Transparent,
+                    errorContainerColor = Color.Transparent,
+                    errorIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     focusedIndicatorColor = Color.Transparent,
                     disabledIndicatorColor = Color.Transparent,
@@ -72,8 +100,14 @@ fun AppTextField(value: String, label: String?=null, onValueChange: (String) -> 
                 singleLine = true,
                 modifier = Modifier
                     .weight(1F)
-                    .fillMaxHeight()
+                    .height(60.dp)
             )
+        }
+        AnimatedVisibility(visible = (validator?.let { it(value) } ?: "").isNotEmpty()) {
+            AppText(validator?.let { it(value) } ?: "",
+                color = AppColors.error,
+                size = 12,
+                modifier = Modifier.padding(start = 4.dp))
         }
     }
 

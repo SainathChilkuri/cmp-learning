@@ -20,10 +20,34 @@ import androidx.compose.ui.unit.sp
 import com.get.set.designsystem.util.AppColors
 
 @Composable
-fun AppPrimaryButton(onTap: () -> Unit, label: String, labelSize: Int = 18, labelWeight: FontWeight?=FontWeight.W700, backgroundColor: Color = AppColors.primaryColor, labelColor: Color = AppColors.white) {
-    Button(onClick = onTap, contentPadding = PaddingValues(vertical = 20.dp),shape = RoundedCornerShape(8.dp),colors = ButtonDefaults.buttonColors().copy(
-        containerColor = backgroundColor,
-    ),modifier = Modifier.fillMaxWidth()) {
+fun AppPrimaryButton(
+    onTap: () -> Unit,
+    label: String,
+    labelSize: Int = 18,
+    labelWeight: FontWeight? = FontWeight.W700,
+    backgroundColor: Color = AppColors.primaryColor,
+    labelColor: Color = AppColors.white,
+    buttonStatus: AppPrimaryButtonStatus = AppPrimaryButtonStatus.ACTIVE,
+) {
+    Button(
+        onClick = {
+            if (buttonStatus == AppPrimaryButtonStatus.ACTIVE) {
+                onTap()
+            }
+        },
+        contentPadding = PaddingValues(vertical = 20.dp),
+        shape = RoundedCornerShape(8.dp),
+        colors = ButtonDefaults.buttonColors().copy(
+            containerColor = if (buttonStatus == AppPrimaryButtonStatus.ACTIVE || buttonStatus == AppPrimaryButtonStatus.LOADING) backgroundColor else AppColors.grey002,
+        ),
+        modifier = Modifier.fillMaxWidth()
+    ) {
         AppText(label, size = labelSize, fontWeight = labelWeight, color = labelColor)
     }
+}
+
+enum class AppPrimaryButtonStatus {
+    ACTIVE,
+    DISABLED,
+    LOADING
 }
