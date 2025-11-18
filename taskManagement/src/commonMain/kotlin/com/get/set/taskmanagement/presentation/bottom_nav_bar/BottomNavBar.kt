@@ -42,14 +42,16 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import com.get.set.coremodels.models.UserDataModel
 import com.get.set.coremodule.BasePage
+import com.get.set.coremodule.JsonSerializerUtil
 import com.get.set.coremodule.navigations.Navigator
 import com.get.set.coremodule.navigations.NavigatorUtil
 import com.get.set.coremodule.navigations.Screens
 import com.get.set.designsystem.util.AppColors
 import com.get.set.taskmanagement.presentation.bottom_nav_bar.widget.BottomNavIcon
 
-class AppBottomNavigationBar(bottomNavBarViewModel: BottomNavBarViewModel, val onTabChange: (Int) -> Unit): BasePage<BottomNavBarViewModel>(bottomNavBarViewModel) {
+class AppBottomNavigationBar(bottomNavBarViewModel: BottomNavBarViewModel,  val userDataModel: UserDataModel ,val onTabChange: (Int) -> Unit,): BasePage<BottomNavBarViewModel>(bottomNavBarViewModel) {
 
 
 
@@ -120,7 +122,7 @@ class AppBottomNavigationBar(bottomNavBarViewModel: BottomNavBarViewModel, val o
                     ),
                     shape = CircleShape,
                 ).clickable {
-                    NavigatorUtil.pushNamed(Screens.Task);
+                    NavigatorUtil.pushNamed(Screens.Task.createRoute(JsonSerializerUtil.parseToJson<UserDataModel>(userDataModel)));
                 }
             ) {
                 Image(

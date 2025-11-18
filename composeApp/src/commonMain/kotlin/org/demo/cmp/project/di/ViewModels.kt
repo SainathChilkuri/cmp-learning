@@ -31,6 +31,6 @@ val viewModel = module {
     }
 
     factory <TaskViewModel> {
-        TaskViewModel()
+        TaskViewModel(get())
     }
 }

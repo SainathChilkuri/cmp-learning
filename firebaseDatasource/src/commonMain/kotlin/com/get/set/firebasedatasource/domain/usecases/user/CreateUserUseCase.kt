@@ -12,5 +12,5 @@ class CreateUserUseCase(private val userRepository: UserRepository): BaseUseCase
 }
 
 @Serializable
-data class CreateUserUseCaseParams(val email: String, val displayName: String, val userName: String) {
+data class CreateUserUseCaseParams(val email: String, val displayName: String, val userName: String, val userId: String) {
 }

@@ -10,6 +10,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,12 +43,16 @@ fun AppPrimaryButton(
         ),
         modifier = Modifier.fillMaxWidth()
     ) {
-        AppText(label, size = labelSize, fontWeight = labelWeight, color = labelColor)
+        if (buttonStatus == AppPrimaryButtonStatus.LOADING) {
+            CircularProgressIndicator(color = AppColors.white)
+        } else {
+            AppText(label, size = labelSize, fontWeight = labelWeight, color = labelColor)
+
+        }
+
     }
 }
 
 enum class AppPrimaryButtonStatus {
-    ACTIVE,
-    DISABLED,
-    LOADING
+    ACTIVE, DISABLED, LOADING
 }

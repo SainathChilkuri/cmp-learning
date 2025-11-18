@@ -6,5 +6,6 @@ data class UserTableEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val displayName: String,
     val email: String,
-    val username: String?= null
+    val username: String?= null,
+    val userId: String
 )

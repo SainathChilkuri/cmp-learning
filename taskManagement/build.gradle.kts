@@ -65,6 +65,7 @@ kotlin {
                 implementation(project(":coreModule"))
                 implementation(project(":designSystem"))
                 implementation(project(":coreModels"))
+                implementation(project(":firebaseDatasource"))
                 // Add KMP dependencies here
 
                 // Add KMP dependencies here

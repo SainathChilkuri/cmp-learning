@@ -30,7 +30,8 @@ class SplashViewModel(private val fetchLoggedInUserDetailsUseCase: FetchLoggedIn
                     val userModel = UserModel(
                         it.email?:"",
                         it.username?:"",
-                        it.displayName?:""
+                        it.displayName?:"",
+                        it.userId
                     )
                     _navigateToLogin.value = _navigateToLogin.value.copy(userModel = userModel, dataState = DataState.SUCCESS);
                 },

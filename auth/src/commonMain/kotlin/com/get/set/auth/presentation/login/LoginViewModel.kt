@@ -16,6 +16,8 @@ import com.get.set.database.domain.usecases.StoreUserDataUseCaseParams
 import com.get.set.firebasedatasource.domain.usecases.user.CreateUserUseCase
 import com.get.set.firebasedatasource.domain.usecases.user.CreateUserUseCaseParams
 import org.demo.cmp.project.presentation.screens.login.LoginScreenDataState
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 class LoginViewModel(private val signInUseCase: GoogleSignInUseCase,private val storeUserDataUseCase: StoreUserDataUseCase, private val createUserUseCase: CreateUserUseCase): BaseViewModel() {
 
@@ -46,6 +48,7 @@ class LoginViewModel(private val signInUseCase: GoogleSignInUseCase,private val 
         }
     }
 
+    @OptIn(ExperimentalUuidApi::class)
     private suspend fun createUser(userModel: UserModel) {
         viewModelScope.launch {
             executeUseCase<CreateUserUseCaseParams, Boolean, AppCustomException, CreateUserUseCase>(
@@ -54,7 +57,8 @@ class LoginViewModel(private val signInUseCase: GoogleSignInUseCase,private val 
                             UserDataModel(
                                 displayName = userModel.displayName,
                                 email = userModel.email,
-                                username = userModel.username
+                                username = userModel.username,
+                                userId = userModel.userId
                             )
                         ))
                         loginScreenState.value = loginScreenState.value.copy(userModel = userModel, dataState = DataState.SUCCESS);
@@ -66,7 +70,8 @@ class LoginViewModel(private val signInUseCase: GoogleSignInUseCase,private val 
                 params = CreateUserUseCaseParams(
                     email = userModel.email,
                     displayName = userModel.displayName,
-                    userName = userModel.username
+                    userName = userModel.username,
+                    userId = Uuid.random().toHexDashString()
                 )
 
             )

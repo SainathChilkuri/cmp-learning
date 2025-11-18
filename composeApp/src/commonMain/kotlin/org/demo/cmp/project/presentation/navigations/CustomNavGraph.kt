@@ -37,8 +37,11 @@ fun CustomNavGraph(navController: NavHostController, koin: Koin) {
               }
           }
 
-          composable(Screens.Task.route) {
-              TaskScreen(taskViewModel = koin.get()).Draw()
+          composable(Screens.Task.route, arguments = listOf(navArgument("data") {type = NavType.StringType})) {backStackEntry ->
+              backStackEntry.fetchData<UserDataModel>("data")?.let {
+                  TaskScreen(taskViewModel = koin.get(), userDataModel = it).Draw()
+              }
+
           }
 
       }

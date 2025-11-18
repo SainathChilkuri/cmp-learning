@@ -18,6 +18,8 @@ class UserDataSourceImpl(private val firestore: FirebaseFirestore): UserDataSour
 
             if(userData.documents.isEmpty()) {
                 val result: DocumentReference = firestore.collection(CollectionConstants.USER).add(createUserUseCaseParams)
+
+                ///TODO: Send User Details Back to Viewmodel From Firebase
                 return true;
             }else{
                 return false;

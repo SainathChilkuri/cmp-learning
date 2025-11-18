@@ -48,7 +48,8 @@ class LoginScreen (private val loginViewModel: LoginViewModel): BasePage<LoginVi
                     UserDataModel(
                         email = loginScreenState.value.userModel?.email,
                         displayName = loginScreenState.value.userModel?.displayName,
-                        username = loginScreenState.value.userModel?.username
+                        username = loginScreenState.value.userModel?.username,
+                        userId = loginScreenState.value.userModel?.userId ?:""
                     )
                 )), Screens.Login)
         }

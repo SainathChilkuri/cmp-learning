@@ -7,6 +7,8 @@ import com.get.set.database.data.datasource.local_datasource.LocalDataSourceImpl
 import org.demo.cmp.project.core.AppDatabaseBuilder
 import com.get.set.auth.data.datasource.remote_datasource.auth.AuthDataSource
 import com.get.set.auth.data.datasource.remote_datasource.auth.AuthDatasourceImpl
+import com.get.set.firebasedatasource.data.datasource.task.TaskDataSource
+import com.get.set.firebasedatasource.data.datasource.task.TaskDataSourceImpl
 import com.get.set.firebasedatasource.data.datasource.user.UserDataSource
 import com.get.set.firebasedatasource.data.datasource.user.UserDataSourceImpl
 import com.get.set.firebasedatasource.domain.repository.UserRepository
@@ -31,4 +33,8 @@ val datasources = module {
     single<UserDataSource> {
         UserDataSourceImpl(Firebase.firestore)
     } bind UserDataSource::class
+
+    single<TaskDataSource> {
+        TaskDataSourceImpl(Firebase.firestore)
+    } bind TaskDataSource::class
 }

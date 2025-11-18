@@ -63,7 +63,7 @@ class BottomBarPageView(private val bottomBarPageViewModel: BottomBarPageViewMod
     @Composable
     override fun BottomNavBar() {
            val scope = rememberCoroutineScope();
-           AppBottomNavigationBar(bottomNavBarViewModel) {
+           AppBottomNavigationBar(bottomNavBarViewModel, userDataModel) {
               scope.launch {
                   bottomBarPageViewModel.updatePagerState(pagerState,it)
               }

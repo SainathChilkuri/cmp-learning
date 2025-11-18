@@ -32,11 +32,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.get.set.coremodels.models.UserDataModel
 import com.get.set.coremodule.AppLogs
 import com.get.set.coremodule.BasePage
 import com.get.set.coremodule.utils.DateUtils
@@ -46,8 +48,10 @@ import com.get.set.designsystem.components.AppText
 import com.get.set.designsystem.components.AppTextField
 import com.get.set.designsystem.components.VerticalSpacer
 import com.get.set.designsystem.util.AppColors
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
-class TaskScreen(private val taskViewModel: TaskViewModel) :
+class TaskScreen(private val taskViewModel: TaskViewModel, private val userDataModel: UserDataModel) :
     BasePage<TaskViewModel>(taskViewModel) {
 
     @OptIn(ExperimentalMaterial3Api::class)
@@ -255,13 +259,16 @@ class TaskScreen(private val taskViewModel: TaskViewModel) :
     @Composable
     override fun BottomNavBar() {
         val taskScreenState = viewModel.taskScreenState.collectAsState()
+        val scope = rememberCoroutineScope()
         Box(
             modifier = Modifier.padding(16.dp)
         ) {
             AppPrimaryButton(
                 buttonStatus = taskScreenState.value.buttonStatus,
                 onTap = {
-
+                    scope.launch {
+                        viewModel.createNewTask(userId = userDataModel.userId)
+                    }
                 },
                 label = "Create a new task",
             )

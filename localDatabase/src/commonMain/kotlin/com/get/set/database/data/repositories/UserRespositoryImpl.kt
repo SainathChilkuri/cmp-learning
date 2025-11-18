@@ -14,7 +14,8 @@ class UserLocalDataRepositoryImpl(private val localDataSource: LocalDataSource):
         return UserDataModel(
             displayName = userEntity.displayName,
             email = userEntity.email,
-            username = userEntity.username
+            username = userEntity.username,
+            userId = userEntity.userId
         )
     }
 
@@ -22,7 +23,8 @@ class UserLocalDataRepositoryImpl(private val localDataSource: LocalDataSource):
         val userTableEntity: UserTableEntity = UserTableEntity(
             displayName = storeUserDataUseCaseParams.userDataModel.displayName?: "",
             email = storeUserDataUseCaseParams.userDataModel.email?: "",
-            username = storeUserDataUseCaseParams.userDataModel.username
+            username = storeUserDataUseCaseParams.userDataModel.username,
+            userId = storeUserDataUseCaseParams.userDataModel.userId
         )
         val result : Boolean =  localDataSource.saveLoggedInUser(userEntity = userTableEntity);
         return result;

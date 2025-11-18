@@ -37,7 +37,8 @@ class SplashScreen(splashViewModel: SplashViewModel) : BasePage<SplashViewModel>
                         JsonSerializerUtil.parseToJson(UserDataModel(
                             email = it.email,
                             displayName = it.displayName,
-                            username = it.username
+                            username = it.username,
+                            userId = it.userId
                         ))
                     ), Screens.Splash)
                 }

@@ -1,15 +1,22 @@
 package com.get.set.taskmanagement.presentation.task
 
 import androidx.compose.ui.graphics.Color
+import com.get.set.coremodule.AppCustomException
 import com.get.set.coremodule.AppLogs
 import com.get.set.coremodule.BaseViewModel
+import com.get.set.coremodule.DataState
+import com.get.set.coremodule.executeUseCase
 import com.get.set.coremodule.utils.DateUtils
 import com.get.set.designsystem.components.AppPrimaryButtonStatus
 import com.get.set.designsystem.util.AppColors
+import com.get.set.firebasedatasource.domain.usecases.task.CreateTaskUseCase
+import com.get.set.firebasedatasource.domain.usecases.task.CreateTaskUseCaseParams
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
-class TaskViewModel : BaseViewModel() {
+class TaskViewModel(private val createTaskUseCase: CreateTaskUseCase) : BaseViewModel() {
 
     private val _taskScreenState: MutableStateFlow<TaskScreenState> =
         MutableStateFlow<TaskScreenState>(
@@ -99,6 +106,49 @@ class TaskViewModel : BaseViewModel() {
 
     private fun updateButtonStatus() {
         _taskScreenState.value = _taskScreenState.value.copy(buttonStatus = getButtonStatus())
+    }
+
+    @OptIn(ExperimentalUuidApi::class)
+    suspend fun createNewTask(userId: String) {
+        _taskScreenState.value = _taskScreenState.value.copy(
+            dataState = DataState.LOADING,
+            buttonStatus = AppPrimaryButtonStatus.LOADING
+        )
+        executeUseCase<CreateTaskUseCaseParams, Boolean, AppCustomException, CreateTaskUseCase>(
+            useCase = createTaskUseCase,
+            params = CreateTaskUseCaseParams(
+                taskTitle = _taskScreenState.value.title ?: "",
+                taskDescription = _taskScreenState.value.description ?: "",
+                userId = userId,
+                taskStartTime = _taskScreenState.value.startTime ?: "",
+                taskEndtime = _taskScreenState.value.endTime ?: "",
+                categories = _taskScreenState.value.categories.map { it.label }.toList(),
+                taskDate = DateUtils.getCurrentDateInISO(),
+                taskId = Uuid.random().toHexDashString()
+            ),
+            onSuccess = {
+                clearAllFields()
+            },
+            onError = {
+                _taskScreenState.value = _taskScreenState.value.copy(
+                    dataState = DataState.FAILED,
+                    buttonStatus = AppPrimaryButtonStatus.ACTIVE
+                )
+            }
+        )
+    }
+
+    private fun clearAllFields() {
+        _taskScreenState.value = _taskScreenState.value.copy(
+            title = null,
+            description = null,
+            date = null,
+            endTime = null,
+            startTime = null,
+            categories = emptyList(),
+            dataState = DataState.SUCCESS,
+            buttonStatus = AppPrimaryButtonStatus.ACTIVE
+        )
     }
 }
 
