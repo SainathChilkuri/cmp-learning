@@ -11,8 +11,8 @@ import com.get.set.designsystem.components.AppPrimaryButtonStatus
 import com.get.set.designsystem.util.AppColors
 import com.get.set.firebasedatasource.domain.usecases.task.CreateTaskUseCase
 import com.get.set.firebasedatasource.domain.usecases.task.CreateTaskUseCaseParams
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.Uuid
 
@@ -25,7 +25,7 @@ class TaskViewModel(private val createTaskUseCase: CreateTaskUseCase) : BaseView
             )
         )
 
-    var taskScreenState = _taskScreenState;
+    var taskScreenState: StateFlow<TaskScreenState> = _taskScreenState;
 
 
     private val randomColors = listOf(
@@ -87,11 +87,6 @@ class TaskViewModel(private val createTaskUseCase: CreateTaskUseCase) : BaseView
     }
 
     private fun getButtonStatus(): AppPrimaryButtonStatus {
-        AppLogs.info("Status ${_taskScreenState.value.title}", "button")
-        AppLogs.info("Status ${_taskScreenState.value.description}", "button")
-        AppLogs.info("Status ${_taskScreenState.value.startTime}", "button")
-        AppLogs.info("Status ${_taskScreenState.value.endTime}", "button")
-        AppLogs.info("Status ${_taskScreenState.value.categories}", "button")
         return if (((_taskScreenState.value.title
                 ?: "").length > 3) && (_taskScreenState.value.description
                 ?: "").length > 3 && (_taskScreenState.value.startTime
@@ -147,7 +142,7 @@ class TaskViewModel(private val createTaskUseCase: CreateTaskUseCase) : BaseView
             startTime = null,
             categories = emptyList(),
             dataState = DataState.SUCCESS,
-            buttonStatus = getButtonStatus()
+            buttonStatus = AppPrimaryButtonStatus.DISABLED
         )
     }
 }

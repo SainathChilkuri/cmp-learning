@@ -24,7 +24,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 abstract class BasePage<V : BaseViewModel>(val viewModel: V ) {
 
-    protected lateinit var pagerState: PagerState
+    protected var pagerState: PagerState ?= null
 
     protected lateinit var snackBarHostState: SnackbarHostState
 

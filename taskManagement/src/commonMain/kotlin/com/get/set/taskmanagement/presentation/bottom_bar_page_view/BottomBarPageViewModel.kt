@@ -1,14 +1,19 @@
 package com.get.set.taskmanagement.presentation.bottom_bar_page_view
 
 import androidx.compose.foundation.pager.PagerState
-import com.get.set.coremodule.AppLogs
 import com.get.set.coremodule.BaseViewModel
 import com.get.set.taskmanagement.presentation.dashboard.DashboardViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 
-class BottomBarPageViewModel (val dashboardViewModel: DashboardViewModel): BaseViewModel() {
+class BottomBarPageViewModel(val dashboardViewModel: DashboardViewModel) : BaseViewModel() {
+
+    private val currentTabPosition: MutableStateFlow<Int> = MutableStateFlow(0);
+    val currentTabPositionValue = currentTabPosition;
 
     suspend fun updatePagerState(pagerState: PagerState, tabPosition: Int) {
-        AppLogs.info("to ${tabPosition}","Tabs")
-                pagerState.animateScrollToPage(tabPosition)
+        if (currentTabPosition.value != tabPosition) {
+            currentTabPosition.value = tabPosition
+        }
+        pagerState.animateScrollToPage(tabPosition)
     }
 }

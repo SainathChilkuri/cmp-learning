@@ -27,6 +27,8 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,23 +44,25 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.get.set.coremodels.models.UserDataModel
 import com.get.set.coremodule.BasePage
 import com.get.set.coremodule.JsonSerializerUtil
-import com.get.set.coremodule.navigations.Navigator
 import com.get.set.coremodule.navigations.NavigatorUtil
 import com.get.set.coremodule.navigations.Screens
 import com.get.set.designsystem.util.AppColors
 import com.get.set.taskmanagement.presentation.bottom_nav_bar.widget.BottomNavIcon
 
-class AppBottomNavigationBar(bottomNavBarViewModel: BottomNavBarViewModel,  val userDataModel: UserDataModel ,val onTabChange: (Int) -> Unit,): BasePage<BottomNavBarViewModel>(bottomNavBarViewModel) {
-
+class AppBottomNavigationBar(
+    bottomNavBarViewModel: BottomNavBarViewModel,
+    private val userDataModel: UserDataModel,
+    private val selectedTab: Int = 0,
+    val onTabChange: (Int) -> Unit,
+) : BasePage<BottomNavBarViewModel>(bottomNavBarViewModel) {
 
 
     @Composable
     override fun Content(paddingValues: PaddingValues, viewModel: BottomNavBarViewModel) {
-
-        val tabPosition = viewModel.currentTabPositionValue.collectAsState()
 
         Box {
             Box(
@@ -73,18 +77,16 @@ class AppBottomNavigationBar(bottomNavBarViewModel: BottomNavBarViewModel,  val 
                     BottomNavIcon(
                         selectedIcon = Icons.Filled.Home,
                         unselectedIcon = Icons.Outlined.Home,
-                        isSelected = tabPosition.value == 0,
+                        isSelected = selectedTab == 0,
                         onTap = {
-                            viewModel.onTabChange(0);
                             onTabChange(0)
                         }
                     )
                     BottomNavIcon(
                         selectedIcon = Icons.Filled.CalendarMonth,
                         unselectedIcon = Icons.Outlined.CalendarMonth,
-                        isSelected = tabPosition.value == 1,
+                        isSelected = selectedTab == 1,
                         onTap = {
-                            viewModel.onTabChange(1);
                             onTabChange(1)
                         }
                     )
@@ -92,18 +94,16 @@ class AppBottomNavigationBar(bottomNavBarViewModel: BottomNavBarViewModel,  val 
                     BottomNavIcon(
                         selectedIcon = Icons.Filled.Book,
                         unselectedIcon = Icons.Outlined.Book,
-                        isSelected = tabPosition.value == 2,
+                        isSelected = selectedTab == 2,
                         onTap = {
-                            viewModel.onTabChange(2);
                             onTabChange(2)
                         }
                     )
                     BottomNavIcon(
                         selectedIcon = Icons.Filled.Person,
                         unselectedIcon = Icons.Outlined.Person,
-                        isSelected = tabPosition.value == 3,
+                        isSelected = selectedTab == 3,
                         onTap = {
-                            viewModel.onTabChange(3);
                             onTabChange(3)
                         }
                     )
@@ -111,7 +111,8 @@ class AppBottomNavigationBar(bottomNavBarViewModel: BottomNavBarViewModel,  val 
             }
 
             Box(
-                modifier = Modifier.align(alignment = Alignment.BottomCenter).size(70.dp).offset(y = (-30).dp).background(
+                modifier = Modifier.align(alignment = Alignment.BottomCenter).size(70.dp)
+                    .offset(y = (-30).dp).background(
                     brush = Brush.linearGradient(
                         colors = listOf(
                             AppColors.blueCoala, // Blue
@@ -122,7 +123,13 @@ class AppBottomNavigationBar(bottomNavBarViewModel: BottomNavBarViewModel,  val 
                     ),
                     shape = CircleShape,
                 ).clickable {
-                    NavigatorUtil.pushNamed(Screens.Task.createRoute(JsonSerializerUtil.parseToJson<UserDataModel>(userDataModel)));
+                    NavigatorUtil.pushNamed(
+                        Screens.Task.createRoute(
+                            JsonSerializerUtil.parseToJson<UserDataModel>(
+                                userDataModel
+                            )
+                        )
+                    );
                 }
             ) {
                 Image(
