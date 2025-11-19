@@ -43,14 +43,9 @@ class LoginScreen (private val loginViewModel: LoginViewModel): BasePage<LoginVi
     override fun Content(paddingValues: PaddingValues, viewModel: LoginViewModel) {
         val loginScreenState = viewModel.loginScreenStateValue.collectAsState();
 
-        if(loginScreenState.value.dataState == DataState.SUCCESS) {
+        if(loginScreenState.value.dataState == DataState.SUCCESS && loginScreenState.value.userModel != null) {
                 NavigatorUtil.pushNamedAndRemoveUntil(Screens.Dashboard.createRoute(JsonSerializerUtil.parseToJson<UserDataModel>(
-                    UserDataModel(
-                        email = loginScreenState.value.userModel?.email,
-                        displayName = loginScreenState.value.userModel?.displayName,
-                        username = loginScreenState.value.userModel?.username,
-                        userId = loginScreenState.value.userModel?.userId ?:""
-                    )
+                    loginScreenState.value.userModel!!
                 )), Screens.Login)
         }
         SafeArea { modifier ->

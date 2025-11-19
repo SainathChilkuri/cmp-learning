@@ -147,7 +147,7 @@ class TaskViewModel(private val createTaskUseCase: CreateTaskUseCase) : BaseView
             startTime = null,
             categories = emptyList(),
             dataState = DataState.SUCCESS,
-            buttonStatus = AppPrimaryButtonStatus.ACTIVE
+            buttonStatus = getButtonStatus()
         )
     }
 }

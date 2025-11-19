@@ -64,6 +64,7 @@ kotlin {
                 implementation(libs.kotlin.stdlib)
 
                 implementation(project(":coreModule"))
+                implementation(project(":coreModels"))
                 implementation("dev.gitlive:firebase-firestore:2.4.0")
 
 

@@ -11,6 +11,7 @@ import com.get.set.auth.domain.models.UserModel
 import com.get.set.auth.domain.usecases.auth.GoogleSignInUseCase
 import com.get.set.auth.domain.usecases.auth.GoogleSignInUseCaseParams
 import com.get.set.coremodels.models.UserDataModel
+import com.get.set.coremodule.AppLogs
 import com.get.set.database.domain.usecases.StoreUserDataUseCase
 import com.get.set.database.domain.usecases.StoreUserDataUseCaseParams
 import com.get.set.firebasedatasource.domain.usecases.user.CreateUserUseCase
@@ -51,17 +52,14 @@ class LoginViewModel(private val signInUseCase: GoogleSignInUseCase,private val 
     @OptIn(ExperimentalUuidApi::class)
     private suspend fun createUser(userModel: UserModel) {
         viewModelScope.launch {
-            executeUseCase<CreateUserUseCaseParams, Boolean, AppCustomException, CreateUserUseCase>(
+            executeUseCase<CreateUserUseCaseParams, UserDataModel, AppCustomException, CreateUserUseCase>(
                 onSuccess = {
+                      AppLogs.info("User--->${it}","User Id")
+                      AppLogs.info("UserId--->${it.userId}","User Id")
                         storeUserDataUseCase.execute(StoreUserDataUseCaseParams(
-                            UserDataModel(
-                                displayName = userModel.displayName,
-                                email = userModel.email,
-                                username = userModel.username,
-                                userId = userModel.userId
-                            )
+                            it
                         ))
-                        loginScreenState.value = loginScreenState.value.copy(userModel = userModel, dataState = DataState.SUCCESS);
+                        loginScreenState.value = loginScreenState.value.copy(userModel = it, dataState = DataState.SUCCESS);
                 },
                 onError = {
                     loginScreenState.value = loginScreenState.value.copy(dataState = DataState.FAILED);

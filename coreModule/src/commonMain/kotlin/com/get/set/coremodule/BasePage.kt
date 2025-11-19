@@ -11,8 +11,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -24,10 +26,15 @@ abstract class BasePage<V : BaseViewModel>(val viewModel: V ) {
 
     protected lateinit var pagerState: PagerState
 
+    protected lateinit var snackBarHostState: SnackbarHostState
+
     @Composable
     fun Draw() {
+        snackBarHostState = remember { SnackbarHostState() }
+
         SafeArea {
             Scaffold(
+                snackbarHost = { snackBarHostState },
                 containerColor = Color.White,
                 topBar = { TopAppBarUnit() },
                 bottomBar = { BottomNavBar() }
