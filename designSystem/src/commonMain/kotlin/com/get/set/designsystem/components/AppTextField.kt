@@ -66,6 +66,7 @@ fun AppTextField(
                 textStyle = TextStyle(
                     fontFamily = poppins(),
                     fontSize = 16.sp,
+                    color = AppColors.onyxBlack,
                     fontWeight = FontWeight.W500
                 ),
                 isError = validator?.let {
@@ -78,15 +79,15 @@ fun AppTextField(
                 placeholder = {
                     AppText(
                         if (showLabelOnTop) "" else label ?: "",
-                        color = AppColors.grey002,
+                        color = AppColors.onyxBlack,
                         size = 16,
                         fontWeight = FontWeight.W500
                     )
                 },
                 colors = TextFieldDefaults.colors(
-                    focusedTextColor = AppColors.grey002,
+                    focusedTextColor = AppColors.onyxBlack,
                     focusedLabelColor = AppColors.grey002,
-                    unfocusedTextColor = AppColors.grey002,
+                    unfocusedTextColor = AppColors.onyxBlack,
                     focusedContainerColor = Color.Transparent,
                     unfocusedContainerColor = Color.Transparent,
                     disabledContainerColor = Color.Transparent,

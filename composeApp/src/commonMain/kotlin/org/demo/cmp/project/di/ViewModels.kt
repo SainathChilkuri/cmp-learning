@@ -4,6 +4,7 @@ import com.get.set.auth.domain.usecases.auth.GoogleSignInUseCase
 import com.get.set.taskmanagement.presentation.bottom_bar_page_view.BottomBarPageViewModel
 import com.get.set.auth.presentation.login.LoginViewModel
 import com.get.set.taskmanagement.presentation.bottom_nav_bar.BottomNavBarViewModel
+import com.get.set.taskmanagement.presentation.calendar.CalendarViewModel
 import com.get.set.taskmanagement.presentation.dashboard.DashboardViewModel
 import com.get.set.taskmanagement.presentation.task.TaskViewModel
 import org.demo.cmp.project.presentation.screens.splash.SplashViewModel
@@ -23,7 +24,7 @@ val viewModel = module {
     }
 
     factory <BottomBarPageViewModel> {
-        BottomBarPageViewModel(get())
+        BottomBarPageViewModel(get(),get())
     }
 
     factory <BottomNavBarViewModel> {
@@ -32,5 +33,9 @@ val viewModel = module {
 
     factory <TaskViewModel> {
         TaskViewModel(get())
+    }
+
+    factory <CalendarViewModel> {
+        CalendarViewModel()
     }
 }

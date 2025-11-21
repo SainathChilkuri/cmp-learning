@@ -22,6 +22,7 @@ import com.get.set.coremodule.AppLogs
 import com.get.set.coremodule.BasePage
 import com.get.set.taskmanagement.presentation.bottom_nav_bar.AppBottomNavigationBar
 import com.get.set.taskmanagement.presentation.bottom_nav_bar.BottomNavBarViewModel
+import com.get.set.taskmanagement.presentation.calendar.CalendarScreen
 import com.get.set.taskmanagement.presentation.dashboard.DashboardScreen
 import com.get.set.taskmanagement.presentation.dashboard.DashboardScreenParams
 import kotlinx.coroutines.launch
@@ -54,9 +55,7 @@ class BottomBarPageView(
                         DashboardScreenParams(userDataModel)
                     ).Draw()
 
-                    1 -> Scaffold {
-                        Text("Calendar")
-                    }
+                    1 -> CalendarScreen(viewModel.calendarViewModel, userDataModel).Draw()
 
                     2 -> Text("Book")
                     3 -> Text("Profile")

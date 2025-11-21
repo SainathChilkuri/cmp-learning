@@ -31,7 +31,6 @@ abstract class BasePage<V : BaseViewModel>(val viewModel: V ) {
     @Composable
     fun Draw() {
         snackBarHostState = remember { SnackbarHostState() }
-
         SafeArea {
             Scaffold(
                 snackbarHost = { snackBarHostState },

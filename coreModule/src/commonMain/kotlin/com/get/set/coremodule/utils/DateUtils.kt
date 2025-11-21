@@ -1,6 +1,7 @@
 package com.get.set.coremodule.utils
 
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateRange
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.format
@@ -12,6 +13,7 @@ import kotlinx.datetime.format.FormatStringsInDatetimeFormats
 import kotlinx.datetime.format.MonthNames
 import kotlinx.datetime.format.byUnicodePattern
 import kotlinx.datetime.format.char
+import kotlinx.datetime.number
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
@@ -45,5 +47,23 @@ object DateUtils {
             return "${hour - 12}:${if(minute < 10) "0$minute" else minute} $meridiem"
         }
         return "$hour:${if(minute < 10) "0$minute" else minute} $meridiem"
+    }
+
+    fun getDaysInMonth(month: Int, year: Int): Int {
+        return if(month == 2) {
+            if(year%4 == 0) {
+                29;
+            }else{
+                28;
+            }
+        }else{
+            if(month <= 5) {
+                if(month%2==0) 30 else 31
+            }else if(month > 5 ) {
+                if(month%2==0) 31 else 30;
+            }else{
+                30;
+            }
+        }
     }
 }

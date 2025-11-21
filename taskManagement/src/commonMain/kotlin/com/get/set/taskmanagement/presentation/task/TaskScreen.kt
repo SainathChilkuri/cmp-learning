@@ -76,6 +76,7 @@ class TaskScreen(private val taskViewModel: TaskViewModel, private val userDataM
 
 
         if(taskScreenState.value.dataState == DataState.SUCCESS) {
+            viewModel.resetDataState()
             coroutineScope.launch {
                 snackBarHostState.showSnackbar(AppSnackBarVisuals(
                     actionLabel = null,
@@ -88,6 +89,7 @@ class TaskScreen(private val taskViewModel: TaskViewModel, private val userDataM
         }
 
         if(taskScreenState.value.dataState == DataState.FAILED) {
+            viewModel.resetDataState()
             coroutineScope.launch {
                 snackBarHostState.showSnackbar(AppSnackBarVisuals(
                     actionLabel = null,
@@ -129,7 +131,7 @@ class TaskScreen(private val taskViewModel: TaskViewModel, private val userDataM
             Column(
                 modifier = Modifier.verticalScroll(scrollState).padding(16.dp)
             ) {
-                VerticalSpacer(60)
+
                 AppTextField(
                     showLabelOnTop = true,
                     value = viewModel.taskScreenState.value.title ?: "",

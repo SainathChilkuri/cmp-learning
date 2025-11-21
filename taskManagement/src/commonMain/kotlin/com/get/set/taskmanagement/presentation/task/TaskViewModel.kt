@@ -145,6 +145,10 @@ class TaskViewModel(private val createTaskUseCase: CreateTaskUseCase) : BaseView
             buttonStatus = AppPrimaryButtonStatus.DISABLED
         )
     }
+
+    fun resetDataState() {
+        _taskScreenState.value = _taskScreenState.value.copy(dataState = DataState.INITIAL)
+    }
 }
 
 data class Categories(val label: String, val color: Color)
