@@ -15,9 +15,11 @@ data class CreateTaskUseCaseParams (
     val userId: String,
     val taskTitle: String,
     val taskDescription: String,
-    val taskDate: String,
+    val taskTimeStamp: String,
     val taskStartTime: String,
-    val taskEndtime: String,
+    val taskEndTime: String,
     val categories: List<String>,
-    val taskId: String
+    val taskId: String,
+    val taskDate: String,
+    val taskStatus: String
 ) {}

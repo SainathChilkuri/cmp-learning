@@ -36,6 +36,6 @@ val viewModel = module {
     }
 
     factory <CalendarViewModel> {
-        CalendarViewModel()
+        CalendarViewModel(get())
     }
 }

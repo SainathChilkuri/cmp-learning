@@ -116,10 +116,13 @@ class TaskViewModel(private val createTaskUseCase: CreateTaskUseCase) : BaseView
                 taskDescription = _taskScreenState.value.description ?: "",
                 userId = userId,
                 taskStartTime = _taskScreenState.value.startTime ?: "",
-                taskEndtime = _taskScreenState.value.endTime ?: "",
+                taskEndTime = _taskScreenState.value.endTime ?: "",
                 categories = _taskScreenState.value.categories.map { it.label }.toList(),
-                taskDate = DateUtils.getCurrentDateInISO(),
-                taskId = Uuid.random().toHexDashString()
+                taskDate = DateUtils.getCurrentDateInISO().split("T").first(),
+                taskId = Uuid.random().toHexDashString(),
+                taskTimeStamp = DateUtils.getCurrentDateInISO(),
+                taskStatus = "IN-PROGRESS"
+
             ),
             onSuccess = {
                 clearAllFields()
