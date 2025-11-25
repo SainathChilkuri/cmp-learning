@@ -48,22 +48,4 @@ object DateUtils {
         }
         return "$hour:${if(minute < 10) "0$minute" else minute} $meridiem"
     }
-
-    fun getDaysInMonth(month: Int, year: Int): Int {
-        return if(month == 2) {
-            if(year%4 == 0) {
-                29;
-            }else{
-                28;
-            }
-        }else{
-            if(month <= 5) {
-                if(month%2==0) 30 else 31
-            }else if(month > 5 ) {
-                if(month%2==0) 31 else 30;
-            }else{
-                30;
-            }
-        }
-    }
 }

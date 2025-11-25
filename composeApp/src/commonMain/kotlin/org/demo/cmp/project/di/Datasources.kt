@@ -19,9 +19,11 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val datasources = module {
+
     single <RoomDatabase.Builder<AppDatabase>>{
         AppDatabaseBuilder.getDatabaseBuilder()
     }
+
     single<LocalDataSource> {
         LocalDataSourceImpl(get())
     } bind LocalDataSource::class
