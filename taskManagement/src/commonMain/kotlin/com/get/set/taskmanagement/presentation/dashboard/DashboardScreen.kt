@@ -70,7 +70,6 @@ class DashboardScreen(private val dashboardViewModel: DashboardViewModel, val da
                 horizontalAlignment = Alignment.Start,
                 modifier = Modifier.verticalScroll(scrollState).fillMaxWidth().fillMaxHeight()
             ) {
-                VerticalSpacer(60)
                 Row(
                     horizontalArrangement = Arrangement.End,
                     modifier = Modifier.fillMaxWidth()

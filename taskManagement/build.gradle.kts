@@ -80,6 +80,9 @@ kotlin {
                 implementation(compose.components.uiToolingPreview)
 
                 implementation(compose.materialIconsExtended)
+
+                implementation(libs.kotlin.datetime)
+
             }
         }
 

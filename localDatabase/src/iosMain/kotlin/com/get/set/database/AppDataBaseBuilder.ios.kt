@@ -13,7 +13,7 @@ fun buildIosDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
         val dbFile = NSHomeDirectory() + "/app_db.db"
         return Room.databaseBuilder<AppDatabase>(
             name = dbFile,
-//            factory = { AppDatabase::class.instantiateImpl() } // This too will show error
+//            factory = { AppDatabase_Impl() } // This too will show error
         )
             .fallbackToDestructiveMigrationOnDowngrade(true)
             .setDriver(BundledSQLiteDriver()) // Very important

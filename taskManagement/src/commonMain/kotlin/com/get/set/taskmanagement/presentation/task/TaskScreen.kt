@@ -44,6 +44,8 @@ import com.get.set.coremodels.models.UserDataModel
 import com.get.set.coremodule.AppLogs
 import com.get.set.coremodule.BasePage
 import com.get.set.coremodule.DataState
+import com.get.set.coremodule.navigations.Navigator
+import com.get.set.coremodule.navigations.NavigatorUtil
 import com.get.set.coremodule.utils.DateUtils
 import com.get.set.designsystem.AppTimerDialog
 import com.get.set.designsystem.components.AppPrimaryButton
@@ -76,6 +78,7 @@ class TaskScreen(private val taskViewModel: TaskViewModel, private val userDataM
 
 
         if(taskScreenState.value.dataState == DataState.SUCCESS) {
+            viewModel.resetDataState()
             coroutineScope.launch {
                 snackBarHostState.showSnackbar(AppSnackBarVisuals(
                     actionLabel = null,
@@ -84,10 +87,13 @@ class TaskScreen(private val taskViewModel: TaskViewModel, private val userDataM
                     appSnackBarType = AppSnackBarType.SUCCESS,
                     withDismissAction = false
                 ))
+
+                NavigatorUtil.pop()
             }
         }
 
         if(taskScreenState.value.dataState == DataState.FAILED) {
+            viewModel.resetDataState()
             coroutineScope.launch {
                 snackBarHostState.showSnackbar(AppSnackBarVisuals(
                     actionLabel = null,
@@ -129,7 +135,7 @@ class TaskScreen(private val taskViewModel: TaskViewModel, private val userDataM
             Column(
                 modifier = Modifier.verticalScroll(scrollState).padding(16.dp)
             ) {
-                VerticalSpacer(60)
+
                 AppTextField(
                     showLabelOnTop = true,
                     value = viewModel.taskScreenState.value.title ?: "",
