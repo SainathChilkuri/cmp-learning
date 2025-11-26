@@ -40,6 +40,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,6 +51,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.get.set.coremodels.models.UserDataModel
+import com.get.set.coremodule.AppLogs
 import com.get.set.coremodule.BasePage
 import com.get.set.coremodule.DataState
 import com.get.set.coremodule.utils.DateUtils
@@ -73,15 +75,18 @@ class CalendarScreen(
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content(paddingValues: PaddingValues, viewModel: CalendarViewModel) {
+        val vModel = remember {viewModel}
         val scrollState = rememberScrollState();
         val lazyListState = rememberLazyListState()
-        val calendarState = viewModel.selectedDateValue.collectAsState()
-        val taskStates = viewModel.calendarScreenStateValue.collectAsStateWithLifecycle()
+        val calendarState = vModel.selectedDateValue.collectAsState()
+        val taskStates = vModel.calendarScreenStateValue.collectAsState()
         val scope = rememberCoroutineScope()
 
-        LaunchedEffect(Unit) {
-            lazyListState.animateScrollToItem(viewModel.selectedDateValue.value.day - 0)
-            viewModel.fetchTasks(userId = userDataModel.userId)
+        LaunchedEffect(userDataModel.userId) {
+            lazyListState.animateScrollToItem(vModel.selectedDateValue.value.day - 0)
+            if(taskStates.value.dataState == DataState.INITIAL){
+                vModel.fetchTasks(userId = userDataModel.userId)
+            }
         }
 
 
@@ -93,9 +98,9 @@ class CalendarScreen(
             ) {
                 AppCalendar(
                     onChangeDate = {
-                        viewModel.onChangeDate(it)
+                        vModel.onChangeDate(it)
                         scope.launch {
-                            viewModel.fetchTasks(userId = userDataModel.userId)
+                            vModel.fetchTasks(userId = userDataModel.userId)
                         }
                     }, value = calendarState.value, lazyListState = lazyListState
                 )
@@ -111,84 +116,101 @@ class CalendarScreen(
                     )
                 }
                 VerticalSpacer(15)
-                 when(taskStates.value.dataState) {
-                     DataState.LOADING -> {
-                         CircularProgressIndicator(
-                             modifier = Modifier.height(50.dp).width(50.dp)
-                         )
-                     }
-                     DataState.SUCCESS -> {
-                         LazyColumn(
+                when (taskStates.value.dataState) {
+                    DataState.LOADING -> {
+                        CircularProgressIndicator(
+                            modifier = Modifier.height(50.dp).width(50.dp)
+                        )
+                    }
 
-                         ) {
-                             items(taskStates.value.taskModels.size) {
-                                 Column {
-                                     VerticalSpacer(10)
-                                     Row(
-                                         verticalAlignment = Alignment.CenterVertically,
-                                         modifier = Modifier.fillMaxWidth()
-                                     ) {
-                                         AppText(
-                                             taskStates.value.taskModels[it].taskStartTime.split(" ").first(),
-                                             size = 14,
-                                             fontWeight = FontWeight.W500,
-                                             color = AppColors.onyxBlack,
-                                             modifier = Modifier.weight(2F)
-                                         )
-                                         Box(modifier = Modifier.width(10.dp))
-                                         Box(
-                                             modifier = Modifier.shadow(
-                                                 elevation = 10.dp,
-                                                 shape = RoundedCornerShape(8.dp),
-                                                 clip = false
-                                             ).background(
-                                                 color = if (it == 1) AppColors.primaryColor else AppColors.white,
-                                                 shape = RoundedCornerShape(8.dp),
-                                             ).weight(7F)
-                                         ) {
-                                             Column(
-                                                 horizontalAlignment = Alignment.Start,
-                                                 modifier = Modifier.padding(
-                                                     vertical = 10.dp, horizontal = 16.dp
-                                                 )
-                                             ) {
-                                                 AppText(
-                                                     taskStates.value.taskModels[it].taskTitle,
-                                                     size = 14,
-                                                     fontWeight = FontWeight.W600,
-                                                     color = if (it == 1) AppColors.white else AppColors.onyxBlack
-                                                 )
-                                                 AppText(
-                                                     taskStates.value.taskModels[it].taskDescription,
-                                                     size = 12,
-                                                     fontWeight = FontWeight.W400,
-                                                     color = if (it == 1) AppColors.white else AppColors.onyxBlack
-                                                 )
-                                                 VerticalSpacer(4)
-                                                 AppText(
-                                                     "${taskStates.value.taskModels[it].taskStartTime} - ${taskStates.value.taskModels[it].taskEndTime}",
-                                                     size = 10,
-                                                     fontWeight = FontWeight.W400,
-                                                     color = AppColors.onyxBlack
-                                                 )
+                    DataState.SUCCESS -> {
+                        LazyColumn {
+                            items(taskStates.value.taskModels.size + 1) {
+                                if(it == taskStates.value.taskModels.size) VerticalSpacer(200)
+                                else Column {
+                                    VerticalSpacer(10)
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        modifier = Modifier.fillMaxWidth()
+                                    ) {
+                                        AppText(
+                                            taskStates.value.taskModels[it].taskStartTime,
+                                            size = 15,
+                                            fontWeight = FontWeight.W600,
+                                            color = AppColors.onyxBlack,
+                                            modifier = Modifier.weight(2F)
+                                        )
+                                        Box(modifier = Modifier.width(10.dp))
+                                        Box(
+                                            modifier = Modifier.shadow(
+                                                elevation = 10.dp,
+                                                shape = RoundedCornerShape(8.dp),
+                                                clip = false
+                                            ).background(
+                                                color = if (vModel.isCurrentTimeSlot(
+                                                        taskStates.value.taskModels[it].taskStartTime,
+                                                        taskStates.value.taskModels[it].taskEndTime,
+                                                        taskStates.value.taskModels[it].taskDate,
+                                                    )
+                                                ) AppColors.primaryColor else AppColors.white,
+                                                shape = RoundedCornerShape(8.dp),
+                                            ).weight(7F)
+                                        ) {
+                                            Column(
+                                                horizontalAlignment = Alignment.Start,
+                                                modifier = Modifier.padding(
+                                                    vertical = 10.dp, horizontal = 16.dp
+                                                )
+                                            ) {
+                                                AppText(
+                                                    taskStates.value.taskModels[it].taskTitle,
+                                                    size = 14,
+                                                    fontWeight = FontWeight.W600,
+                                                    color = if (vModel.isCurrentTimeSlot(
+                                                            taskStates.value.taskModels[it].taskStartTime,
+                                                            taskStates.value.taskModels[it].taskEndTime,
+                                                            taskStates.value.taskModels[it].taskDate,
+                                                        )
+                                                    ) AppColors.white else AppColors.onyxBlack
+                                                )
+                                                AppText(
+                                                    taskStates.value.taskModels[it].taskDescription,
+                                                    size = 12,
+                                                    fontWeight = FontWeight.W400,
+                                                    color = if (vModel.isCurrentTimeSlot(
+                                                            taskStates.value.taskModels[it].taskStartTime,
+                                                            taskStates.value.taskModels[it].taskEndTime,
+                                                            taskStates.value.taskModels[it].taskDate,
+                                                        )
+                                                    ) AppColors.white else AppColors.onyxBlack
+                                                )
+                                                VerticalSpacer(4)
+                                                AppText(
+                                                    "${taskStates.value.taskModels[it].taskStartTime} - ${taskStates.value.taskModels[it].taskEndTime}",
+                                                    size = 10,
+                                                    fontWeight = FontWeight.W400,
+                                                    color = AppColors.onyxBlack
+                                                )
 
-                                             }
-                                         }
+                                            }
+                                        }
 
-                                     }
-                                     VerticalSpacer(10)
-                                 }
-                             }
-                         }
-                     }
-                     DataState.FAILED -> {
-                         AppText("Something went wrong, please try again")
-                     }
-                     else-> {
-                         AppText("")
-                     }
-                 }
-                VerticalSpacer(70)
+                                    }
+                                    VerticalSpacer(10)
+                                }
+                            }
+                        }
+                    }
+
+                    DataState.FAILED -> {
+                        AppText("Something went wrong, please try again")
+                    }
+
+                    else -> {
+                        AppText("Oops, look like something went wrong")
+                    }
+                }
+
             }
         }
     }

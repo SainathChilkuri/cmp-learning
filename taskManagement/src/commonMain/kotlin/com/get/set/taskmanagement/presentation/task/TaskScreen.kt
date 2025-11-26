@@ -44,6 +44,8 @@ import com.get.set.coremodels.models.UserDataModel
 import com.get.set.coremodule.AppLogs
 import com.get.set.coremodule.BasePage
 import com.get.set.coremodule.DataState
+import com.get.set.coremodule.navigations.Navigator
+import com.get.set.coremodule.navigations.NavigatorUtil
 import com.get.set.coremodule.utils.DateUtils
 import com.get.set.designsystem.AppTimerDialog
 import com.get.set.designsystem.components.AppPrimaryButton
@@ -85,6 +87,8 @@ class TaskScreen(private val taskViewModel: TaskViewModel, private val userDataM
                     appSnackBarType = AppSnackBarType.SUCCESS,
                     withDismissAction = false
                 ))
+
+                NavigatorUtil.pop()
             }
         }
 
