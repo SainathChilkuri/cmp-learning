@@ -56,8 +56,16 @@ import com.get.set.designsystem.components.AppText
 import com.get.set.designsystem.components.AppTextField
 import com.get.set.designsystem.components.VerticalSpacer
 import com.get.set.designsystem.util.AppColors
+import demo_cmp_project.taskmanagement.generated.resources.Res
+import demo_cmp_project.taskmanagement.generated.resources.create_a_new_task
+import demo_cmp_project.taskmanagement.generated.resources.date
+import demo_cmp_project.taskmanagement.generated.resources.description
+import demo_cmp_project.taskmanagement.generated.resources.end_time
+import demo_cmp_project.taskmanagement.generated.resources.start_time
+import demo_cmp_project.taskmanagement.generated.resources.title
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.stringResource
 
 class TaskScreen(private val taskViewModel: TaskViewModel, private val userDataModel: UserDataModel) :
     BasePage<TaskViewModel>(taskViewModel) {
@@ -142,7 +150,7 @@ class TaskScreen(private val taskViewModel: TaskViewModel, private val userDataM
                     onValueChange = {
                         viewModel.updateTitle(it);
                     },
-                    label = "Title",
+                    label = stringResource(Res.string.title),
 
                     ) { it ->
                     if (it.length < 3) return@AppTextField "Title should be at least 3 characters long" else return@AppTextField null
@@ -154,7 +162,7 @@ class TaskScreen(private val taskViewModel: TaskViewModel, private val userDataM
                     onValueChange = {
                         viewModel.updateDescription(it);
                     },
-                    label = "Description"
+                    label = stringResource(Res.string.description)
                 ) { it ->
                     if (it.length < 3) return@AppTextField "Description should be at least 3 characters long" else return@AppTextField null
                 }
@@ -166,7 +174,7 @@ class TaskScreen(private val taskViewModel: TaskViewModel, private val userDataM
                     onValueChange = {
 
                     },
-                    label = "Date"
+                    label = stringResource(Res.string.date)
                 )
                 VerticalSpacer(30)
 
@@ -190,7 +198,7 @@ class TaskScreen(private val taskViewModel: TaskViewModel, private val userDataM
 
                                     },
                                     enabled = false,
-                                    label = "Start time"
+                                    label = stringResource(Res.string.start_time)
                                 )
                             }
 
@@ -215,7 +223,7 @@ class TaskScreen(private val taskViewModel: TaskViewModel, private val userDataM
                                     onValueChange = {
 
                                     },
-                                    label = "End time",
+                                    label = stringResource(Res.string.end_time),
                                     enabled = false,
                                 )
                             }
@@ -309,7 +317,7 @@ class TaskScreen(private val taskViewModel: TaskViewModel, private val userDataM
                         viewModel.createNewTask(userId = userDataModel.userId)
                     }
                 },
-                label = "Create a new task",
+                label = stringResource(Res.string.create_a_new_task),
             )
         }
     }

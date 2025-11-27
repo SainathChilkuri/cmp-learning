@@ -17,6 +17,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.get.set.auth.presentation.profile.ProfileScreen
 import com.get.set.coremodels.models.UserDataModel
 import com.get.set.coremodule.AppLogs
 import com.get.set.coremodule.BasePage
@@ -58,7 +59,7 @@ class BottomBarPageView(
                     1 -> CalendarScreen(viewModel.calendarViewModel, userDataModel).Draw()
 
                     2 -> Text("Book")
-                    3 -> Text("Profile")
+                    3 -> ProfileScreen(viewModel.profileViewModel,userDataModel).Draw()
                 }
             }
         }

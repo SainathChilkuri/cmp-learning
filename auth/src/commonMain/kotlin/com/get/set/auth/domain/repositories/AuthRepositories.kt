@@ -4,4 +4,5 @@ import com.get.set.auth.domain.models.UserModel
 
 abstract class AuthRepository {
     abstract suspend fun signInWithGoogle(): UserModel
+    abstract suspend fun logout(): Boolean
 }

@@ -22,4 +22,9 @@ class AuthDatasourceImpl(private val firebaseAuthWithGoogle: FirebaseAuthWithGoo
             throw AppCustomException(e.message?:e.toString(), tag = "Auth")
         }
     }
+
+    override suspend fun logout(): Boolean {
+       firebaseAuthWithGoogle.signOut()
+        return true;
+    }
 }

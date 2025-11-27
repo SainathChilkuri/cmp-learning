@@ -33,4 +33,13 @@ class LocalDataSourceImpl(private val appDatabase: RoomDatabase.Builder<AppDatab
             throw AppCustomException(e.message ?:"Something went wrong", tag = "Auth")
         }
     }
+
+    override suspend fun clearAllUserData(): Boolean {
+        try{
+            appDatabase.build().getUserEntityInterface().deleteAllUsers();
+            return true
+        }catch (e: Exception) {
+            throw AppCustomException(e.message ?:"Something went wrong", tag = "Auth")
+        }
+    }
 }

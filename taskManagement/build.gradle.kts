@@ -63,6 +63,7 @@ kotlin {
             dependencies {
                 implementation(libs.kotlin.stdlib)
                 implementation(project(":coreModule"))
+                implementation(project(":auth"))
                 implementation(project(":designSystem"))
                 implementation(project(":coreModels"))
                 implementation(project(":firebaseDatasource"))

@@ -5,11 +5,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.content.MediaType.Companion.Text
+import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -48,6 +50,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.get.set.coremodels.models.UserDataModel
@@ -60,6 +63,10 @@ import com.get.set.designsystem.components.AppText
 import com.get.set.designsystem.components.VerticalSpacer
 import com.get.set.designsystem.util.AppColors
 import com.get.set.designsystem.util.DSAsset
+import demo_cmp_project.taskmanagement.generated.resources.Res
+import demo_cmp_project.taskmanagement.generated.resources.end_time
+import demo_cmp_project.taskmanagement.generated.resources.something_went_wrong
+import demo_cmp_project.taskmanagement.generated.resources.your_day_is_empty
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.datetime.DatePeriod
@@ -67,6 +74,7 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.minus
 import kotlinx.datetime.plus
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 class CalendarScreen(
     private val calendarViewModel: CalendarViewModel, private val userDataModel: UserDataModel
@@ -75,7 +83,7 @@ class CalendarScreen(
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content(paddingValues: PaddingValues, viewModel: CalendarViewModel) {
-        val vModel = remember {viewModel}
+        val vModel = remember { viewModel }
         val scrollState = rememberScrollState();
         val lazyListState = rememberLazyListState()
         val calendarState = vModel.selectedDateValue.collectAsState()
@@ -84,7 +92,7 @@ class CalendarScreen(
 
         LaunchedEffect(userDataModel.userId) {
             lazyListState.animateScrollToItem(vModel.selectedDateValue.value.day - 0)
-            if(taskStates.value.dataState == DataState.INITIAL){
+            if (taskStates.value.dataState == DataState.INITIAL) {
                 vModel.fetchTasks(userId = userDataModel.userId)
             }
         }
@@ -124,9 +132,9 @@ class CalendarScreen(
                     }
 
                     DataState.SUCCESS -> {
-                        LazyColumn {
+                        if (taskStates.value.taskModels.isNotEmpty()) LazyColumn {
                             items(taskStates.value.taskModels.size + 1) {
-                                if(it == taskStates.value.taskModels.size) VerticalSpacer(200)
+                                if (it == taskStates.value.taskModels.size) VerticalSpacer(200)
                                 else Column {
                                     VerticalSpacer(10)
                                     Row(
@@ -200,14 +208,26 @@ class CalendarScreen(
                                 }
                             }
                         }
+                        else Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier.fillMaxWidth().fillMaxHeight()
+                                .padding(horizontal = 20.dp)
+                        ) {
+                            AppText(
+                                stringResource(Res.string.your_day_is_empty),
+                                size = 16,
+                                fontWeight = FontWeight.W600,
+                                textAlign = TextAlign.Center
+                            )
+                        }
                     }
 
                     DataState.FAILED -> {
-                        AppText("Something went wrong, please try again")
+                        AppText(stringResource(Res.string.something_went_wrong))
                     }
 
                     else -> {
-                        AppText("Oops, look like something went wrong")
+                        AppText(stringResource(Res.string.something_went_wrong))
                     }
                 }
 

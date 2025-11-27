@@ -9,7 +9,10 @@ import com.get.set.auth.domain.repositories.AuthRepository
 class AuthRepositoryImpl(private val authDataSource: AuthDataSource): AuthRepository() {
     override suspend fun signInWithGoogle(): UserModel {
         val userEntity: UserEntity = authDataSource.signInWithGoogle();
-        AppLogs.info("User Details---->${userEntity.displayName}","Auth")
         return userEntity
+    }
+
+    override suspend fun logout(): Boolean {
+        return authDataSource.logout()
     }
 }

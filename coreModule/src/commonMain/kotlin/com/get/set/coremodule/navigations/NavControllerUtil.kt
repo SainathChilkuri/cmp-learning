@@ -23,9 +23,15 @@ object NavigatorUtil{
 
     fun pushNamedAndRemoveUntil(screens: Screens, uptoScreen: Screens?) {
         navHostController.navigate(screens.route) {
-            uptoScreen?.let {
-                popUpTo(uptoScreen.route) {
+            if(uptoScreen == null) {
+                popUpTo(0) {
                     inclusive = true
+                }
+            }else{
+                uptoScreen.let {
+                    popUpTo(uptoScreen.route) {
+                        inclusive = true
+                    }
                 }
             }
         };
