@@ -5,6 +5,8 @@ plugins {
     alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    kotlin("plugin.serialization") version "2.2.21"
+
 }
 
 kotlin {
@@ -62,6 +64,8 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(libs.kotlin.stdlib)
+
+                implementation(project(":coreModels"))
                 // Add KMP dependencies here
                 implementation(libs.androidx.lifecycle.viewmodelCompose)
                 implementation(libs.androidx.lifecycle.runtimeCompose)
@@ -84,6 +88,8 @@ kotlin {
 
                 ///Navigation
                 implementation(libs.androidx.navigation.compose)
+
+                implementation(libs.kotlin.serialization)
             }
         }
 

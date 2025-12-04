@@ -44,9 +44,7 @@ class LoginScreen (private val loginViewModel: LoginViewModel): BasePage<LoginVi
         val loginScreenState = viewModel.loginScreenStateValue.collectAsState();
 
         if(loginScreenState.value.dataState == DataState.SUCCESS && loginScreenState.value.userModel != null) {
-                NavigatorUtil.pushNamedAndRemoveUntil(Screens.Dashboard.createRoute(JsonSerializerUtil.parseToJson<UserDataModel>(
-                    loginScreenState.value.userModel!!
-                )), Screens.Login)
+                NavigatorUtil.pushNamedAndRemoveUntil(Screens.Dashboard(loginScreenState.value.userModel!!))
         }
         SafeArea { modifier ->
             Box(

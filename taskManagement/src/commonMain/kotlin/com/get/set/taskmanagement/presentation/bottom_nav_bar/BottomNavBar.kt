@@ -124,11 +124,7 @@ class AppBottomNavigationBar(
                     shape = CircleShape,
                 ).clickable {
                     NavigatorUtil.pushNamed(
-                        Screens.Task.createRoute(
-                            JsonSerializerUtil.parseToJson<UserDataModel>(
-                                userDataModel
-                            )
-                        )
+                        Screens.Task(userDataModel)
                     );
                 }
             ) {

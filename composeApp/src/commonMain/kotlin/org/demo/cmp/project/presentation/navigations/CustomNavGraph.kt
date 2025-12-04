@@ -2,11 +2,11 @@ package org.demo.cmp.project.presentation.navigations
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.navigation.NavHostController
-import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
+import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.navigation3.runtime.NavBackStack
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
+import androidx.navigation3.ui.NavDisplay
 import com.get.set.coremodule.navigations.Navigator
 import com.get.set.coremodule.navigations.Screens
 import com.get.set.auth.presentation.login.LoginScreen
@@ -18,32 +18,37 @@ import org.demo.cmp.project.presentation.screens.splash.SplashScreen
 import org.koin.core.Koin
 
 @Composable
-fun CustomNavGraph(navController: NavHostController, koin: Koin) {
-  CompositionLocalProvider(Navigator provides navController) {
-      NavigatorUtil.navHostController = Navigator.current;
-      NavHost(navController = navController, startDestination = Screens.Splash.route) {
-          composable(Screens.Splash.route) {
-              SplashScreen(splashViewModel = koin.get()).Draw()
-          }
+fun CustomNavGraph(navBackStack: SnapshotStateList<Screens>, koin: Koin) {
+    CompositionLocalProvider(Navigator provides navBackStack) {
+        NavigatorUtil.navHostController = Navigator.current;
+        NavDisplay(
+            backStack = navBackStack,
+            entryDecorators = listOf(
+                // Add the default decorators for managing scenes and saving state
+                rememberSaveableStateHolderNavEntryDecorator(),
+            ),
+            entryProvider = entryProvider {
+                entry<Screens.Splash> {
+                    SplashScreen(splashViewModel = koin.get()).Draw()
+                }
 
-          composable(Screens.Login.route) {
-              LoginScreen(loginViewModel = koin.get()).Draw()
-          }
+                entry<Screens.Login> {
+                    LoginScreen(loginViewModel = koin.get()).Draw()
+                }
 
-          composable(Screens.Dashboard.route,
-              arguments = listOf(navArgument("data") { type = NavType.StringType })) { backStackEntry ->
-              backStackEntry.fetchData<UserDataModel>("data")?.let {
-                  BottomBarPageView(bottomBarPageViewModel = koin.get(), userDataModel = it, koin.get()).Draw()
-              }
-          }
+                entry<Screens.Dashboard> { key ->
+                    BottomBarPageView(
+                        bottomBarPageViewModel = koin.get(),
+                        userDataModel = key.userDataModel,
+                        koin.get()
+                    ).Draw()
+                }
 
-          composable(Screens.Task.route, arguments = listOf(navArgument("data") {type = NavType.StringType})) {backStackEntry ->
-              backStackEntry.fetchData<UserDataModel>("data")?.let {
-                  TaskScreen(taskViewModel = koin.get(), userDataModel = it).Draw()
-              }
+                entry<Screens.Task> { key ->
+                    TaskScreen(taskViewModel = koin.get(), userDataModel = key.userDataModel).Draw()
+                }
+            }
 
-          }
-
-      }
-  }
+        )
+    }
 }

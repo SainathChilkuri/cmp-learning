@@ -1,45 +1,48 @@
 package com.get.set.coremodule.navigations
 
 import androidx.compose.runtime.compositionLocalOf
-import androidx.navigation.NavHostController
+import androidx.compose.runtime.snapshots.SnapshotStateList
 
 
-var Navigator = compositionLocalOf<NavHostController> {
+var Navigator = compositionLocalOf<SnapshotStateList<Screens>> {
     error("No NavController provided")
 }
 
 object NavigatorUtil{
 
-    lateinit var navHostController: NavHostController
+    lateinit var navHostController: SnapshotStateList<Screens>
 
     fun pushNamed(screens: Screens) {
-        navHostController.navigate(screens.route);
+        navHostController.add(screens);
     }
 
     fun pop() {
-        navHostController.popBackStack();
+        navHostController.removeLast();
     }
 
 
-    fun pushNamedAndRemoveUntil(screens: Screens, uptoScreen: Screens?) {
-        navHostController.navigate(screens.route) {
-            if(uptoScreen == null) {
-                popUpTo(0) {
-                    inclusive = true
-                }
-            }else{
-                uptoScreen.let {
-                    popUpTo(uptoScreen.route) {
-                        inclusive = true
-                    }
-                }
+    fun pushNamedAndRemoveUntil(screens: Screens, uptoScreen: Screens?=null) {
+        val stack = navHostController
+
+        if (uptoScreen == null) {
+            stack.clear()
+            stack.add(screens)
+        } else {
+            while (stack.isNotEmpty() && stack.last() != uptoScreen) {
+                stack.removeLast()
             }
-        };
+            // Now add the new screen
+            stack.add(screens)
+        }
+        navHostController = stack;
     }
 
 
     fun popUntil(screens: Screens) {
-        navHostController.popBackStack(screens.route,inclusive = true);
+        val stack = navHostController;
+            while(stack.last() != screens && navHostController.isNotEmpty()) {
+                navHostController.removeLast()
+            }
     }
 }
 

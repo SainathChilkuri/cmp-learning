@@ -10,12 +10,14 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
@@ -54,8 +56,8 @@ class ProfileScreen(
 
         val scope = rememberCoroutineScope();
 
-        if(profileScreenState.value.dataState == DataState.SUCCESS) {
-            NavigatorUtil.pushNamedAndRemoveUntil(Screens.Login,null)
+        if (profileScreenState.value.dataState == DataState.SUCCESS) {
+            NavigatorUtil.pushNamedAndRemoveUntil(Screens.Login, null)
         }
 
         Column(
@@ -63,18 +65,43 @@ class ProfileScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            NameInitialWidget((userDataModel.displayName ?: "").getInitial())
+            Box() {
+                NameInitialWidget((userDataModel.displayName ?: "").getInitial())
+                Box(
+                    modifier = Modifier.height(150.dp).width(150.dp).background(
+                        color = Color.Transparent,
+
+                    ).clip(shape = CircleShape),
+                    contentAlignment = Alignment.BottomCenter
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .background(color = AppColors.lightGrey.copy(alpha = 0.3F)).fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            Icons.Default.Edit,
+                            contentDescription = "Edit",
+                            modifier = Modifier.padding(vertical = 10.dp)
+                        )
+                    }
+                }
+            }
             VerticalSpacer(30)
             AppText(userDataModel.displayName ?: "", size = 24, fontWeight = FontWeight.W600)
             AppText(userDataModel.email ?: "", size = 14, fontWeight = FontWeight.W300)
             VerticalSpacer(20)
-            when(profileScreenState.value.dataState) {
+            when (profileScreenState.value.dataState) {
                 DataState.LOADING -> {
                     CircularProgressIndicator()
                 }
+
                 else -> {
                     Box(
-                        modifier = Modifier.background(color = Color.Red, shape = RoundedCornerShape(10.dp)).clickable {
+                        modifier = Modifier.background(
+                            color = Color.Red,
+                            shape = RoundedCornerShape(10.dp)
+                        ).clickable {
                             scope.launch {
                                 viewModel.logoutUser()
                             }

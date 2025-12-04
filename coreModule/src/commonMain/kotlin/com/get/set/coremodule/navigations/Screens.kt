@@ -1,16 +1,23 @@
 package com.get.set.coremodule.navigations
 
-open class Screens(val route: String) {
-    data object Splash : Screens("splash")
-    data object Login : Screens("login/{{data}}") {
-        fun createRoute(data: String) = "login/$data"
-    }
+import androidx.navigation3.runtime.NavKey
+import com.get.set.coremodels.models.UserDataModel
+import kotlinx.serialization.Serializable
 
-    data object Dashboard : Screens("dashboard/{data}") {
-        fun createRoute(data: String) = Screens("dashboard/$data")
-    }
+@Serializable
+sealed interface Screens: NavKey {
 
-    data object  Task : Screens("task/{data}") {
-        fun createRoute(data: String) = Screens("task/$data")
-    }
+    @Serializable
+    data object Splash : Screens
+
+    @Serializable
+    data object Login : Screens
+
+
+    @Serializable
+    data class Dashboard(val userDataModel: UserDataModel) : Screens
+
+
+    @Serializable
+    data class Task(val userDataModel: UserDataModel) : Screens
 }
